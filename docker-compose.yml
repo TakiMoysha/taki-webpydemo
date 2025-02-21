@@ -1,0 +1,128 @@
+services:
+  # mongo:
+  # image: mongodb/mongodb-community-server
+  # environment:
+  #   - MONGODB_INITDB_ROOT_USERNAME=
+  #   - MONGODB_INITDB_ROOT_PASSWORD=
+  # volumes:
+  #   - db-volume:/data/db
+
+  # postgres:
+  #   image: postgres
+  #   restart: always
+  #   hostname: db
+  #   volumes:
+  #     - db-volume:/var/lib/postgresql/data
+  #   ports:
+  #     - 15432:5432
+  #   environment:
+  #     - PG_USER=devuser
+  #     - PG_PASS=devuser
+  #     - PG_NAME=devdb
+  #   restart: unless-stopped
+  #   logging:
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "3"
+  #     healthcheck:
+  #       test:
+  #         - CMD
+  #         - pg_isready
+  #         - -U
+  #         - app
+  #       interval: 5s
+  #       timeout: 30s
+  #       retries: 5
+
+  # adminer:
+  #   image: adminer
+  #   ports:
+  #     - 8081:8080
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     - PGADMIN_DEFAULT_EMAIL=
+  #     - PGADMIN_DEFAULT_PASSWORD=
+  #     - PGADMIN_CONFIG_SERVER_MODE='False'
+  #   ports:
+  #     - 8082:80
+
+  # cache:
+  #   image: valkey/valkey:latest
+  #   ports:
+  #     - 16379:6379
+  #   hostname: cache
+  #   command: redis-server --appendonly yes
+  #   volumes:
+  #     - ch-volume:/data
+  #   environment:
+  #     ALLOW_EMPTY_PASSWORD: "yes"
+  #   restart: unless-stopped
+  #   logging:
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "3"
+  #   healthcheck:
+  #     test:
+  #       - CMD
+  #       - redis-cli
+  #       - ping
+  #     interval: 5s
+  #     timeout: 30s
+  #     retries: 5
+
+  # smtp:
+  #   image: mailhog/mailhog:v1.0.0
+  #   container_name: dev-smtp
+  #   ports:
+  #     - "8025:8025"
+
+  app:
+    build:
+      context: .
+      dockerfile: deploy/dokcer/run.dockerfile
+    image: takimoysha/app:latest
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    ports:
+      - 8080:8080
+    environment:
+      VITE_USE_SERVER_LIFESPAN: "false" # true if ssr or separate service
+      SAQ_USE_SERVER_LIFESPAN: "false"
+    env_file:
+      - .env.docker
+
+  worker:
+    image: takimoysha/app:latest
+    command: litestar workers run
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_healthy
+    env_file:
+      - .env.docker
+
+  # migrator:
+  #   image: takimoysha/app:latest
+  #   restart: "no"
+  #   command: litestar database upgrade --no-prompt
+  #   env_file:
+  #     - .env.docker
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #     cache:
+  #       condition: service_healthy
+
+volumes:
+  db-volume: {}
+  ch-volume: {}
