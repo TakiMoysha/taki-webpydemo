@@ -1,0 +1,8 @@
+* text=auto
+
+*.css text diff=css
+*.htm text diff=html
+*.html text diff=html
+*.js text eol=lf
+*.md text
+*.sh text eol=lf
