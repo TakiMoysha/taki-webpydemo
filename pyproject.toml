@@ -2,15 +2,28 @@
 name = "taki-webpydemo"
 version = "0.1.0"
 authors = [{ name = "TakiMoysha", email = "mpwema782@gmail.com" }]
-keywords = ["litestar", "fullstack", "api", "asgi", "vite", "spa", "microservices"]
-description = ""
+keywords = ["litestar", "fullstack", "api", "asgi", "microservices"]
 readme = "README.md"
-license = "LICENSE"
+license = { file = "LICENSE" }
 requires-python = ">=3.12"
 dependencies = [
+  "advanced-alchemy[uuid]>=0.31.0",
+  "argparse>=1.4.0",
+  "click>=8.1.8",
+  "httptools>=0.6.4",
+  "jsonschema>=4.23.0",
+  "litestar-granian>=0.10.0",
+  "litestar-saq>=0.5.0",
+  "litestar-vite[nodeenv]>=0.13.0",
+  "litestar[jinja,jwt,redis,structlog]>=2.14.0",
+  "pydantic>=2.10.6",
+  "python-dotenv>=1.0.1",
+  "python-slugify>=8.0.4",
+  "sqladmin-litestar-plugin>=0.2.0",
+  "structlog>=25.1.0",
 ]
 
-[project.scripts]
+# [project.scripts]
 
 [build-system]
 build-backend = "hatchling.build"
@@ -55,8 +68,8 @@ test = [
   "pytest-databases[redis]>=0.1.0",
 ]
 
-[tool.black]
-line-length = 120
+# [tool.black]
+# line-length = 120
 
 [tool.ruff]
 exclude = [
