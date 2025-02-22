@@ -8,39 +8,41 @@ alembic_config := "src/app/db/migrations/alembic.ini"
 demo:
   docker-compose up --build
 
+docker-run:
+  docker run -it --rm --init --name stage-pywebdemo -p 8000:8000 --cpus=4 pywebdemo:latest
+
+docker-build:
+  docker build -t pywebdemo -f deploy/docker/run.dockerfile .
+
 install:
     pre-commit install
-    uv run python scripts/pre-build.py --install-packages
+    uv run sync
 
 # ============================== DEVELOPMENT 
 dev:
   uv run server --app {{default_app}} run --reload --debug --host 0.0.0.0 --port 8000
 
-
 stage threads='2' workers="2":
   uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads {{threads}} --workers {{workers}} 
 
+migrate:
+  uv run app database upgrade
 
 make-migrations:
   uv run app database make-migrations
-
-migrate:
-  uv run alembic -c {{alembic_config}} upgrade head
 
 routes:
   uv run litestar --app {{default_app}} routes
 
 schema:
-  uv run litestar --app {{default_app}} schema openapi --output docs/schema.json --output docs/schema.json --output docs/schema.json --output docs/schema.json
+  uv run litestar --app {{default_app}} schema openapi --output docs/schema.json
 
 
 test target="tests":
   uv run pytest -v -s --log-cli-level=INFO {{target}}
 
-
 check:
   pre-commit run --all-files
-
 
 # ============================== DOCS 
 make-changelog:
