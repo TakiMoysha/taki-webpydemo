@@ -1,3 +1,9 @@
+demo:
+  docker-compose up --build
 
-style:
+
+test:
+  uv run pytest
+
+check:
   pre-commit run --all-files

@@ -1,0 +1,16 @@
+DB_SESSION_DEPENDENCY_KEY = "db_session"
+
+USER_DEPENDENCY_KEY = "current_user"
+
+DTO_INFO_KEY = "info"
+
+CACHE_EXPIRATION: int = 60
+
+SITE_INDEX = "/"
+HEALTH_ENDPOINT = "/api/heartbeat"
+OPENAPI_SCHEMA = "/schema"
+
+DEFAULT_USER_ROLE = "Guest"
+SUPERUSER_ACCESS_ROLE = "Superuser"
+
+BAD_VALUE = "BAD_VALUE"

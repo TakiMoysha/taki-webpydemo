@@ -2,19 +2,9 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-      - id: check-ast # check python syntax tree
-      - id: check-case-conflict # check for case conflicts
-      - id: check-merge-conflict # check for merge conflicts
       - id: check-toml # check toml
-      - id: debug-statements # check for debug statements
-      - id: mixed-line-ending # fix mixed line endings
-      # - id: trailing-whitespace # trim trailing whitespace # if u whant use this, install black formatter and setup
-
-  # - repo: https://github.com/pre-commit/mirrors-prettier
-  #   rev: v4.0.0-alpha.8
-  #   hooks:
-  #     - id: prettier # format js code
-  #       exclude: templates|migrations|scripts|docs|dist|.venv|public
+      - id: check-ast # check python syntax tree
+      - id: check-merge-conflict # check for merge conflicts
 
   - repo: https://github.com/ariebovenberg/slotscheck
     rev: v0.19.1
@@ -41,10 +31,3 @@ repos:
         language: python
         types_or: [python, pyi]
         require_serial: true
-      # - id: mypy
-      #   name: mypy
-      #   entry: mypy saq
-      #   language: system
-      #   types: [python]
-      #   files: ^(src/app)
-      #   pass_filenames: false
