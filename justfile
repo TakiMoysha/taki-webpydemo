@@ -22,8 +22,7 @@ stage threads='2' workers="2":
 
 
 make-migrations:
-  uv run alembic -c {{alembic_config}} revision --autogenerate
-
+  uv run app database make-migrations
 
 migrate:
   uv run alembic -c {{alembic_config}} upgrade head
