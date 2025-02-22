@@ -1,4 +1,3 @@
-import logging
 from typing import cast
 
 from litestar.config.cors import CORSConfig
@@ -47,7 +46,7 @@ log_config = StructlogConfig(
         log_exceptions="always",
         standard_lib_logging_config=LoggingConfig(
             root={
-                "level": logging.getLevelName(settings.log.LEVEL),
+                "level": settings.log.LEVEL,
                 "handlers": ["queue_listener"],
             },
             loggers={

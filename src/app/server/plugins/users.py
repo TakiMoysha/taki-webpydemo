@@ -12,7 +12,7 @@ from litestar_users.config import (
 
 from app.config.base import get_settings
 from app.db.models.users import User
-from app.domain.dto.users import UserReadDTO, UserRegistrationDTO, UserUpdateDTO
+from app.domain.dto import UserReadDTO, UserRegistrationDTO, UserUpdateDTO
 from app.domain.services.users import UserService
 
 settings = get_settings()

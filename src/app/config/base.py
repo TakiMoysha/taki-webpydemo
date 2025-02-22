@@ -14,6 +14,7 @@ from sqlalchemy import NullPool, event
 from sqlalchemy.ext.asyncio.engine import AsyncEngine, create_async_engine
 
 from app.config.consts import BAD_VALUE
+from app.lib.utils import get_random_string
 
 APP_DIR: Final[Path] = module_to_os_path("app")
 TRUE_VALUES = ("1", "true", "True", "T")
@@ -23,7 +24,7 @@ TRUE_VALUES = ("1", "true", "True", "T")
 class AppSettings:
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:8000"))
     DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in TRUE_VALUES)
-    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", BAD_VALUE))
+    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", get_random_string(32)))
     NAME: str = field(default_factory=lambda: "PyWeb Demo Project")
     ALLOWED_CORS_ORIGINS: list[str] | str = field(default_factory=lambda: os.getenv("ALLOWED_CORS_ORIGINS", '["*"]'))
     CSRF_COOKIE_NAME: str = field(default_factory=lambda: "csrftoken")
@@ -41,9 +42,9 @@ class AppSettings:
         return __version__
 
     def __post_init__(self) -> None:
-        if self.SECRET_KEY is BAD_VALUE:
-            msg = "SECRET_KEY is not set. Please set it in the .env file."
-            raise ValueError(msg) from None
+        if self.SECRET_KEY is BAD_VALUE or len(self.SECRET_KEY) not in (16, 24, 32):
+            msg = "BAD SECRET_KEY. SECRET_KEY should be set in .env file and be 16, 24 or 32 characters long."
+            raise ValueError(msg, self.SECRET_KEY)
 
         if not isinstance(self.ALLOWED_CORS_ORIGINS, str):
             return
@@ -220,12 +221,12 @@ class CacheSettings:
 @dataclass
 class LogSettings:
     LEVEL: str = field(default_factory=lambda: os.getenv("LOG_LEVEL", "INFO"))
-    SAQ_LEVEL: int = logging.WARNING
-    SQLALCHEMY_LEVEL: int = logging.WARNING
-    UVICORN_ACCESS_LEVEL: int = logging.ERROR
-    UVICORN_ERROR_LEVEL: int = logging.WARNING
-    GRANIAN_ACCESS_LEVEL: int = logging.ERROR
-    GRANIAN_ERROR_LEVEL: int = logging.WARNING
+    SAQ_LEVEL: str = logging._levelToName[logging.WARNING]
+    SQLALCHEMY_LEVEL: str = logging._levelToName[logging.WARNING]
+    UVICORN_ACCESS_LEVEL: str = logging._levelToName[logging.ERROR]
+    UVICORN_ERROR_LEVEL: str = logging._levelToName[logging.WARNING]
+    GRANIAN_ACCESS_LEVEL: str = logging._levelToName[logging.ERROR]
+    GRANIAN_ERROR_LEVEL: str = logging._levelToName[logging.WARNING]
 
 
 @dataclass

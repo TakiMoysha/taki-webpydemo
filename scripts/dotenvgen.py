@@ -1,4 +1,6 @@
 import os
+import secrets
+import string
 import subprocess
 
 ENVS = ["dev", "development", "stage", "staging", "prod", "production"]
@@ -92,15 +94,9 @@ VITE_DEV_MODE=True
 """
 
 
-def generate_secret_key(length: str) -> str:
-    """call system openssl rand -base64 32"""
-
-    return subprocess.run(
-        ["openssl", "rand", "--base64", length],
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout.strip()
+def generate_secret_key(length: int) -> str:
+    alphabet = string.ascii_letters + string.digits
+    return "".join(secrets.choice(alphabet) for i in range(length))
 
 
 def get_environment_config():

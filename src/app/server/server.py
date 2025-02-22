@@ -24,14 +24,16 @@ class ServerPlugin(InitPluginProtocol, CLIPluginProtocol):
         from app.cli.commands import (
             generate_env_file,
             check_server,
+            generate_secret_key,
         )
 
         settings = get_settings()
         self.redis = settings.cache.get_client()
         self.app_slug = settings.app.slug
 
-        cli.add_command(lambda: generate_env_file(settings))
-        cli.add_command(lambda: check_server(settings))
+        cli.add_command(generate_secret_key(32))
+        cli.add_command(generate_env_file(settings))
+        cli.add_command(check_server(settings))
 
     @override
     def on_app_init(self, app_config: AppConfig) -> AppConfig:
