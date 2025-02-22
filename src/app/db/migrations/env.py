@@ -1,33 +1,53 @@
 import asyncio
-from logging.config import fileConfig
+from typing import TYPE_CHECKING, cast
 
-from advanced_alchemy.base import orm_registry
+from sqlalchemy import Column, pool
+from sqlalchemy.ext.asyncio import AsyncEngine, async_engine_from_config
+
+from advanced_alchemy.base import metadata_registry
 from alembic import context
-from sqlalchemy import pool
-from sqlalchemy.engine import Connection
-from sqlalchemy.ext.asyncio import async_engine_from_config
+from alembic.autogenerate import rewriter
+from alembic.operations import ops
 
-from app.config.base import get_settings
+if TYPE_CHECKING:
+    from sqlalchemy.engine import Connection
 
-__all__ = ["do_run_migrations", "run_migrations_offline", "run_migrations_online"]
+    from advanced_alchemy.alembic.commands import AlembicCommandConfig
+    from alembic.runtime.environment import EnvironmentContext
 
-
-# ============================ Application Config loading
-settings = get_settings()
-if not settings.db.URL:
-    msg = "DB URI not set in settings!"
-    raise Exception(msg)
-
-# ============================ Alembic config loading
-alembic_config = context.config
-alembic_config.set_main_option("sqlalchemy.url", settings.db.URL)
-
-if alembic_config.config_file_name is not None:
-    fileConfig(alembic_config.config_file_name)
+__all__ = ("do_run_migrations", "run_migrations_offline", "run_migrations_online")
 
 
-# ============================ MetaData models for autogenerate
-target_metadata = orm_registry.metadata
+# this is the Alembic Config object, which provides
+# access to the values within the .ini file in use.
+config: "AlembicCommandConfig" = context.config  # type: ignore  # noqa: PGH003
+writer = rewriter.Rewriter()
+
+
+@writer.rewrites(ops.CreateTableOp)
+def order_columns(
+    context: "EnvironmentContext",  # noqa: ARG001
+    revision: tuple[str, ...],  # noqa: ARG001
+    op: ops.CreateTableOp,
+) -> ops.CreateTableOp:
+    """Orders ID first and the audit columns at the end."""
+    special_names = {"id": -100, "sa_orm_sentinel": 3001, "created_at": 3002, "updated_at": 3003}
+    cols_by_key = [  # pyright: ignore[reportUnknownVariableType]
+        (
+            special_names.get(col.key, index) if isinstance(col, Column) else 2000,
+            col.copy(),  # type: ignore[attr-defined]
+        )
+        for index, col in enumerate(op.columns)
+    ]
+    columns = [col for _, col in sorted(cols_by_key, key=lambda entry: entry[0])]  # pyright: ignore[reportUnknownVariableType,reportUnknownArgumentType,reportUnknownLambdaType]
+    return ops.CreateTableOp(
+        op.table_name,
+        columns,  # pyright: ignore[reportUnknownArgumentType]
+        schema=op.schema,
+        # TODO: Remove when https://github.com/sqlalchemy/alembic/issues/1193 is fixed  # noqa: FIX002
+        _namespace_metadata=op._namespace_metadata,  # noqa: SLF001  # pyright: ignore[reportPrivateUsage]
+        **op.kw,
+    )
 
 
 def run_migrations_offline() -> None:
@@ -40,42 +60,65 @@ def run_migrations_offline() -> None:
 
     Calls to context.execute() here emit the given string to the
     script output.
-
     """
-    url = alembic_config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url,
-        target_metadata=target_metadata,
+        url=config.db_url,
+        target_metadata=metadata_registry.get(config.bind_key),
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        compare_type=config.compare_type,
+        version_table=config.version_table_name,
+        version_table_pk=config.version_table_pk,
+        user_module_prefix=config.user_module_prefix,
+        render_as_batch=config.render_as_batch,
+        process_revision_directives=writer,
     )
 
     with context.begin_transaction():
         context.run_migrations()
 
 
-def do_run_migrations(connection: Connection) -> None:
+def do_run_migrations(connection: "Connection") -> None:
+    """Run migrations."""
     context.configure(
         connection=connection,
-        target_metadata=target_metadata,
-        render_as_batch=True,
+        target_metadata=metadata_registry.get(config.bind_key),
+        compare_type=config.compare_type,
+        version_table=config.version_table_name,
+        version_table_pk=config.version_table_pk,
+        user_module_prefix=config.user_module_prefix,
+        render_as_batch=config.render_as_batch,
+        process_revision_directives=writer,
     )
 
     with context.begin_transaction():
         context.run_migrations()
 
 
-async def run_async_migrations() -> None:
-    """In this scenario we need to create an Engine
-    and associate a connection with the context.
+async def run_migrations_online() -> None:
+    """Run migrations in 'online' mode.
 
+    In this scenario we need to create an Engine and associate a
+    connection with the context.
     """
+    configuration = config.get_section(config.config_ini_section) or {}
+    configuration["sqlalchemy.url"] = config.db_url
 
-    connectable = async_engine_from_config(
-        alembic_config.get_section(alembic_config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
+    connectable = cast(
+        "AsyncEngine",
+        config.engine
+        or async_engine_from_config(
+            configuration,
+            prefix="sqlalchemy.",
+            poolclass=pool.NullPool,
+            future=True,
+        ),
     )
+    if connectable is None:  # pyright: ignore[reportUnnecessaryComparison]
+        msg = "Could not get engine from config.  Please ensure your `alembic.ini` according to the official Alembic documentation."
+        raise RuntimeError(
+            msg,
+        )
 
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
@@ -83,12 +126,7 @@ async def run_async_migrations() -> None:
     await connectable.dispose()
 
 
-def run_migrations_online() -> None:
-    """Run migrations in 'online' mode."""
-    asyncio.run(run_async_migrations())
-
-
 if context.is_offline_mode():
     run_migrations_offline()
 else:
-    run_migrations_online()
+    asyncio.run(run_migrations_online())
