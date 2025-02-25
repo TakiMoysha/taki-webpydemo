@@ -15,9 +15,11 @@ Demo project for portfolio.
 - [ ] reusable packages
 - [ ] DB Schema
 
-
 ## TODO
 
+### Nexus Lib
+
+### Binance Lib
 
 # References & Links
 
