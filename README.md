@@ -14,6 +14,12 @@ Demo project for portfolio.
 - [ ] RESTful API
 - [ ] reusable packages
 - [ ] DB Schema
+- [ ] NGROK
+- [ ] Webhooks
+- [ ] Pyment & Billing
+  - https://developers.google.com/actions-center/verticals/ordering/e2e/integration-steps/build-feeds/overview
+  - https://developer.squareup.com/docs/devtools/sandbox/testing
+
 
 ## TODO
 
