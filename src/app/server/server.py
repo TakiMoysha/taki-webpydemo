@@ -1,4 +1,5 @@
 from typing import override
+
 from click import Group
 from litestar import Request
 from litestar.config.app import AppConfig
@@ -20,12 +21,12 @@ class ServerPlugin(InitPluginProtocol, CLIPluginProtocol):
 
     @override
     def on_cli_init(self, cli: Group) -> None:
-        from app.config import get_settings
         from app.cli.commands import (
-            generate_env_file,
             check_server,
+            generate_env_file,
             generate_secret_key,
         )
+        from app.config import get_settings
 
         settings = get_settings()
         self.redis = settings.cache.get_client()

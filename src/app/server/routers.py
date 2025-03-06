@@ -1,5 +1,5 @@
 from litestar.types import ControllerRouterHandler
 
-# from app.domain.system.controllers import SystemController
+from app.api.routers import api_router
 
-route_handlers: list[ControllerRouterHandler] = []
+route_handlers: list[ControllerRouterHandler] = [api_router]
