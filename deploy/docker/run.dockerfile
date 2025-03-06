@@ -77,11 +77,15 @@ ENV PATH="/workspace/app/.venv/bin:$PATH" \
   LANG=C.UTF-8 \
   LC_ALL=C.UTF-8 \
   LITESTAR_APP="${LITESTAR_APP}"
+
 WORKDIR /workspace/app
 COPY docs/ docs/
 COPY tests/ tests/
 COPY src src/
 RUN uv sync $UV_INSTALL_ARGS
+
+## TODO: added 1001 user
+
 STOPSIGNAL SIGINT
 EXPOSE 8000
 CMD [ "litestar","run","--host","0.0.0.0"]
