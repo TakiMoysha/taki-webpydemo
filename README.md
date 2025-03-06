@@ -19,13 +19,12 @@ Demo project for portfolio.
 - [ ] Pyment & Billing
   - https://developers.google.com/actions-center/verticals/ordering/e2e/integration-steps/build-feeds/overview
   - https://developer.squareup.com/docs/devtools/sandbox/testing
-
+- [ ] work with litestar repositories
 
 ## TODO
 
-### Nexus Lib
-
-### Binance Lib
+`value_objects` - неизменяемый объект
+`repositories` - неизменяемая коллекция объектов
 
 # References & Links
 

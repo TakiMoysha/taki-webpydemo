@@ -20,7 +20,7 @@ install:
 
 # ============================== DEVELOPMENT 
 dev:
-  uv run server --app {{default_app}} run --reload --debug --host 0.0.0.0 --port 8000
+  uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug 
 
 stage threads='2' workers="2":
   uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads {{threads}} --workers {{workers}} 

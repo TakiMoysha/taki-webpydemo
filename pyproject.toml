@@ -27,7 +27,7 @@ dependencies = [
 ]
 
 [project.scripts]
-app = "app.__main__:run_cli"
+server = "app.__main__:run_cli"
 docs_lib = "docs_lib.bin:run"
 
 [build-system]
