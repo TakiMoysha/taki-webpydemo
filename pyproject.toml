@@ -54,7 +54,7 @@ dev = [
 
   "aiosqlite>=0.21.0",
 ]
-nvim = ["basedpyright>=1.23.1", "black>=24.10.0"]
+nvim = ["basedpyright>=1.23.1"]
 docs = ["git-cliff>=2.7.0"]
 linting = [
   "pre-commit>=3.4.0",

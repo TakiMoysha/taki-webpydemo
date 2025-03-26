@@ -44,6 +44,9 @@ schema:
 test target="tests":
   uv run pytest -v -s --log-cli-level=INFO {{target}}
 
+debug-test target:
+  uv run pytest -v -s -rP {{target}}
+
 check:
   pre-commit run --all-files
 
