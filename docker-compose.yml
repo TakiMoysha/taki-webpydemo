@@ -29,7 +29,7 @@ services:
   #         - CMD
   #         - pg_isready
   #         - -U
-  #         - app
+  #         - demoapp
   #       interval: 5s
   #       timeout: 30s
   #       retries: 5
@@ -78,11 +78,11 @@ services:
   #   ports:
   #     - "8025:8025"
 
-  app:
+  demoapp:
     build:
       context: .
-      dockerfile: deploy/dokcer/run.dockerfile
-    image: takimoysha/app:latest
+      dockerfile: deploy/docker/demoapp.dockerfile
+    image: takimoysha/pywebdemo_app:latest
     restart: always
     depends_on:
       postgres:
@@ -99,17 +99,17 @@ services:
     env_file:
       - .env.docker
 
-  worker:
-    image: takimoysha/app:latest
-    command: litestar workers run
-    restart: always
-    depends_on:
-      db:
-        condition: service_healthy
-      cache:
-        condition: service_healthy
-    env_file:
-      - .env.docker
+  # worker:
+  #   image: takimoysha/app:latest
+  #   command: litestar workers run
+  #   restart: always
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #     cache:
+  #       condition: service_healthy
+  #   env_file:
+  #     - .env.docker
 
   # migrator:
   #   image: takimoysha/app:latest
@@ -122,6 +122,22 @@ services:
   #       condition: service_healthy
   #     cache:
   #       condition: service_healthy
+
+networks:
+  ## connection from swag to services
+  gateway:
+    name: gateway
+    ipam:
+      config:
+        - subnet: 172.17.0.0/24 # 172.17.0.1 - 172.17.0.254
+
+  ## connection from services to internal services like db, cache, other services
+  private:
+    name: private
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.17.1.0/29 # 172.17.1.1 - 172.20.1.6
 
 volumes:
   db-volume: {}

@@ -1,18 +1,18 @@
 set dotenv-load
 
 default_env := "stage"
-default_app := "app.asgi:create_app"
-alembic_config := "src/app/db/migrations/alembic.ini"
+default_app := "demoapp.asgi:create_app"
+alembic_config := "src/demoapp/db/migrations/alembic.ini"
 
 
 demo:
   docker-compose up --build
 
 docker-run:
-  docker run -it --rm --init --name stage-pywebdemo -p 8000:8000 --cpus=4 pywebdemo:latest
+  docker run -it --rm --init --name stage-pywebdemo -p 8000:8000 --cpus=4 pywebdemo_app:latest
 
 docker-build:
-  docker build -t pywebdemo -f deploy/docker/run.dockerfile .
+  docker build -t pywebdemo_app -f deploy/docker/demoapp.dockerfile .
 
 install:
     pre-commit install
@@ -25,11 +25,14 @@ dev:
 stage threads='2' workers="2":
   uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads {{threads}} --workers {{workers}} 
 
-migrate:
-  uv run app database upgrade
+tunnel_up:
+  ngrok start default:api
 
-make-migrations:
-  uv run app database make-migrations
+# migrate:
+#   uv run {{default_app}} database upgrade
+
+# make-migrations:
+#   uv run {{default_app}} database make-migrations
 
 routes:
   uv run litestar --app {{default_app}} routes

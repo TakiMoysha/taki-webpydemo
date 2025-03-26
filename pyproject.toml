@@ -1,6 +1,6 @@
 [project]
 name = "taki-webpydemo"
-description = "Used as a sandbox, to run through the functionality."
+description = "Used as a sandbox to try out the functionality."
 dynamic = ["version"]
 authors = [{ name = "TakiMoysha", email = "mpwema782@gmail.com" }]
 keywords = ["litestar", "fullstack", "api", "asgi", "microservices"]
@@ -24,11 +24,11 @@ dependencies = [
   "python-slugify>=8.0.4",
   "sqladmin-litestar-plugin>=0.2.0",
   "structlog>=25.1.0",
+  "taskiq>=0.11.14",
 ]
 
 [project.scripts]
-server = "app.__main__:run_cli"
-docs_lib = "docs_lib.bin:run"
+demoapp = "demoapp.__main__:run_cli"
 
 [build-system]
 build-backend = "hatchling.build"
@@ -37,17 +37,10 @@ requires = ["hatchling", "nodeenv"]
 [tool.hatch.build]
 dev-mode-dirs = ["src/"]
 include = ["public/**/*", "src/**/*.sql"]
-packages = [
-  "src/app",
-  "src/docs_lib",
-  "src/nexus_lib",
-  "src/binance_lib",
-  "src/mws_sdk",
-  "src/quiz",
-]
+packages = ["src/demoapp", "src/wsdk"]
 
 [tool.hatch.version]
-path = "src/app/__about__.py"
+path = "src/demoapp/__about__.py"
 
 [tool.uv]
 default-groups = ["nvim", "dev", "docs", "linting", "test"]
@@ -72,8 +65,8 @@ linting = [
   "types-python-jose",
   "types-pyyaml",
   "types-redis",
-  "asyncpg-stubs",
   "pylint",
+  "asyncpg-stubs",
 ]
 test = [
   "pytest",
@@ -83,10 +76,8 @@ test = [
   "coverage",
   "pytest-sugar",
   "pytest-databases[redis]>=0.1.0",
+  "hypothesis>=6.130.2",
 ]
-
-# [tool.black]
-# line-length = 120
 
 [tool.ruff]
 exclude = [
@@ -110,7 +101,7 @@ exclude = [
   "node_modules",
   "venv",
   '__pycache__',
-  "src/app/db/migrations/versions/*.py",
+  "src/demoapp/db/migrations/versions/*.py",
 ]
 fix = true
 line-length = 120
@@ -167,20 +158,6 @@ target-version = "py311"
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.lint.mccabe]
-max-complexity = 12
-
-[tool.ruff.lint.pep8-naming]
-classmethod-decorators = [
-  "classmethod",
-  "sqlalchemy.ext.declarative.declared_attr",
-  "sqlalchemy.orm.declared_attr.directive",
-  "sqlalchemy.orm.declared_attr",
-]
-
-[tool.ruff.lint.isort]
-known-first-party = ['tests', 'app']
-
 [tool.ruff.lint.per-file-ignores]
 "*/migrations/*.py" = ['D104', 'D103', 'D205', 'D212']
 "__init__.py" = ['F401', 'D104']
@@ -201,7 +178,7 @@ known-first-party = ['tests', 'app']
 "docs/conf.py" = ["FIX002", "ARG001", "INP001"]
 "scripts/*.py" = ["INP001", "ERA001"]
 "scripts/**/*.*" = ["D", "ARG", "EM", "TRY", "G", "FBT", "INP001"]
-"src/app/db/migrations/versions/*.py" = ["ANN201", "INP001"]
+"src/demoapp/db/migrations/versions/*.py" = ["ANN201", "INP001"]
 "tests/*.py" = ['D103', 'S101', 'D104']
 
 [tool.pytest.ini_options]
@@ -245,7 +222,6 @@ omit = ["tests/*", "**/*/migrations/**/*.py", "scripts/*"]
 strict-imports = false
 
 [tool.codespell]
-ignore-words-list = "alog"
 skip = 'uv.lock, package-lock.json'
 
 [tool.git-cliff.changelog]

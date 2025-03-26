@@ -663,6 +663,19 @@ wheels = [
 ]
 
 [[package]]
+name = "hypothesis"
+version = "6.130.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "attrs" },
+    { name = "sortedcontainers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f6/99/58abfe9f6f8bad584f98a955cc40d9afe19d9559689bc5229fe1d6fa3db7/hypothesis-6.130.2.tar.gz", hash = "sha256:979195ef58c309aab98d74b64bbcda5411d0bc86848c1bf89dbffb78c7c7e3ee", size = 427683 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c8/b9/5963d38254e8fee263b536625cb8bf0c7b3daabb2c15cdbabf8124bafad3/hypothesis-6.130.2-py3-none-any.whl", hash = "sha256:b4c03a4a34466e76ecba518390e1759294607d44744e7e122477371b12deb03f", size = 491301 },
+]
+
+[[package]]
 name = "identify"
 version = "2.6.7"
 source = { registry = "https://pypi.org/simple" }
@@ -681,6 +694,18 @@ wheels = [
 ]
 
 [[package]]
+name = "importlib-metadata"
+version = "8.6.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "zipp" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/33/08/c1395a292bb23fd03bdf572a1357c5a733d3eecbab877641ceacab23db6e/importlib_metadata-8.6.1.tar.gz", hash = "sha256:310b41d755445d74569f993ccfc22838295d9fe005425094fad953d7f15c8580", size = 55767 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/79/9d/0fb148dc4d6fa4a7dd1d8378168d9b4cd8d4560a6fbf6f0121c5fc34eb68/importlib_metadata-8.6.1-py3-none-any.whl", hash = "sha256:02a89390c1e15fdfdc0d7c6b25cb3e62650d0494005c97d6f148bf5b9787525e", size = 26971 },
+]
+
+[[package]]
 name = "iniconfig"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -696,6 +721,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1c/28/b382d1656ac0ee4cef4bf579b13f9c6c813bff8a5cb5996669592c8c75fa/isort-6.0.0.tar.gz", hash = "sha256:75d9d8a1438a9432a7d7b54f2d3b45cad9a4a0fdba43617d9873379704a8bdf1", size = 828356 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/c7/d6017f09ae5b1206fbe531f7af3b6dac1f67aedcbd2e79f3b386c27955d6/isort-6.0.0-py3-none-any.whl", hash = "sha256:567954102bb47bb12e0fae62606570faacddd441e45683968c8d1734fb1af892", size = 94053 },
+]
+
+[[package]]
+name = "izulu"
+version = "0.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/40/86/90c4789649de0159fd86add2c2a3ddafe7f7d70a5c59d18ec4c47f3380c4/izulu-0.5.4.tar.gz", hash = "sha256:a6619402ab3c04ca32bbfb5000138287691e0b47d9794ba55a10af403ed23644", size = 34796 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/12/b4/51353ac3bceaea1272af272c9eb9a846e87b0d3482a76dbcd62005483e2c/izulu-0.5.4-py3-none-any.whl", hash = "sha256:6431499a04f68daca0b852dfa5cfbcb7be804166bcdc4efd4dd4e6dd7a3e5898", size = 15022 },
 ]
 
 [[package]]
@@ -1178,6 +1212,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1d/b2/31537cf4b1ca988837256c910a668b553fceb8f069bedc4b1c826024b52c/pycparser-2.22.tar.gz", hash = "sha256:491c8be9c040f5390f5bf44a5b07752bd07f56edf992381b05c701439eec10f6", size = 172736 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/13/a3/a812df4e2dd5696d1f351d58b8fe16a405b234ad2886a0dab9183fb78109/pycparser-2.22-py3-none-any.whl", hash = "sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc", size = 117552 },
+]
+
+[[package]]
+name = "pycron"
+version = "3.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/02/0c/2366dfbb3765662fc9d71d7fa847ddf4f3cd43195dea151bc05a49fda118/pycron-3.1.2.tar.gz", hash = "sha256:114c71bc61002b850a416e33e72a8c6de75b9f5c4228e86d7babd8a7ea232d94", size = 4172 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/60/65/2de047e5396970f3a11b06823d7bcd1108f61787ee21ff33ab7e9fce6635/pycron-3.1.2-py3-none-any.whl", hash = "sha256:30e4a01889dfb471e80cc76a5c0ab87e675146a7f6d2d66a2e4bdb4e2975ef3d", size = 4838 },
 ]
 
 [[package]]
@@ -1688,6 +1731,15 @@ wheels = [
 ]
 
 [[package]]
+name = "sortedcontainers"
+version = "2.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e8/c4/ba2f8066cceb6f23394729afe52f3bf7adec04bf9ed2c820b39e19299111/sortedcontainers-2.4.0.tar.gz", hash = "sha256:25caa5a06cc30b6b83d11423433f65d1f9d76c4c6a0c90e3379eaa43b9bfdb88", size = 30594 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/46/9cb0e58b2deb7f82b84065f37f3bffeb12413f947f9388e4cac22c4621ce/sortedcontainers-2.4.0-py2.py3-none-any.whl", hash = "sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0", size = 29575 },
+]
+
+[[package]]
 name = "sqladmin"
 version = "0.20.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1788,6 +1840,7 @@ dependencies = [
     { name = "python-slugify" },
     { name = "sqladmin-litestar-plugin" },
     { name = "structlog" },
+    { name = "taskiq" },
 ]
 
 [package.dev-dependencies]
@@ -1798,6 +1851,7 @@ dev = [
     { name = "black" },
     { name = "coverage" },
     { name = "git-cliff" },
+    { name = "hypothesis" },
     { name = "pre-commit" },
     { name = "pylint" },
     { name = "pytest" },
@@ -1835,6 +1889,7 @@ nvim = [
 ]
 test = [
     { name = "coverage" },
+    { name = "hypothesis" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-databases", extra = ["redis"] },
@@ -1861,6 +1916,7 @@ requires-dist = [
     { name = "python-slugify", specifier = ">=8.0.4" },
     { name = "sqladmin-litestar-plugin", specifier = ">=0.2.0" },
     { name = "structlog", specifier = ">=25.1.0" },
+    { name = "taskiq", specifier = ">=0.11.14" },
 ]
 
 [package.metadata.requires-dev]
@@ -1871,6 +1927,7 @@ dev = [
     { name = "black", specifier = ">=24.10.0" },
     { name = "coverage" },
     { name = "git-cliff", specifier = ">=2.7.0" },
+    { name = "hypothesis", specifier = ">=6.130.2" },
     { name = "pre-commit", specifier = ">=3.4.0" },
     { name = "pylint" },
     { name = "pytest" },
@@ -1906,12 +1963,42 @@ nvim = [
 ]
 test = [
     { name = "coverage" },
+    { name = "hypothesis", specifier = ">=6.130.2" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-databases", extras = ["redis"], specifier = ">=0.1.0" },
     { name = "pytest-mock" },
     { name = "pytest-sugar" },
     { name = "pytest-xdist" },
+]
+
+[[package]]
+name = "taskiq"
+version = "0.11.14"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "importlib-metadata" },
+    { name = "izulu" },
+    { name = "packaging" },
+    { name = "pycron" },
+    { name = "pydantic" },
+    { name = "pytz" },
+    { name = "taskiq-dependencies" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5f/61/c493f523f1c2322ee8a3d61793502642c9f7029c8d6609547d12d783a30a/taskiq-0.11.14.tar.gz", hash = "sha256:7c9736633d18ff169c6e52c6d6dc938a9bafa377278833100d0a1018c59e97ac", size = 51011 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/20/2bb591b6151b81c504b55f2c15673a525f0c3d2d33788abf3bba81278e02/taskiq-0.11.14-py3-none-any.whl", hash = "sha256:2619afae71db9e8817f282d7fd415678bccf85f7bd545b6496866957accd17cb", size = 75688 },
+]
+
+[[package]]
+name = "taskiq-dependencies"
+version = "1.5.7"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/47/90/47a627696e53bfdcacabc3e8c05b73bf1424685bcb5f17209cb8b12da1bf/taskiq_dependencies-1.5.7.tar.gz", hash = "sha256:0d3b240872ef152b719153b9526d866d2be978aeeaea6600e878414babc2dcb4", size = 14875 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/99/6d/4a012f2de002c2e93273f5e7d3e3feea02f7fdbb7b75ca2ca1dd10703091/taskiq_dependencies-1.5.7-py3-none-any.whl", hash = "sha256:6fcee5d159bdb035ef915d4d848826169b6f06fe57cc2297a39b62ea3e76036f", size = 13801 },
 ]
 
 [[package]]
@@ -2218,4 +2305,13 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/6a/c7/96d10183c3470f1836846f7b9527d6cb0b6c2226ebca40f36fa29f23de60/wtforms-3.1.2.tar.gz", hash = "sha256:f8d76180d7239c94c6322f7990ae1216dae3659b7aa1cee94b6318bdffb474b9", size = 134705 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/18/19/c3232f35e24dccfad372e9f341c4f3a1166ae7c66e4e1351a9467c921cc1/wtforms-3.1.2-py3-none-any.whl", hash = "sha256:bf831c042829c8cdbad74c27575098d541d039b1faa74c771545ecac916f2c07", size = 145961 },
+]
+
+[[package]]
+name = "zipp"
+version = "3.21.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/3f/50/bad581df71744867e9468ebd0bcd6505de3b275e06f202c2cb016e3ff56f/zipp-3.21.0.tar.gz", hash = "sha256:2c9958f6430a2040341a52eb608ed6dd93ef4392e02ffe219417c1b28b5dd1f4", size = 24545 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/1a/7e4798e9339adc931158c9d69ecc34f5e6791489d469f5e50ec15e35f458/zipp-3.21.0-py3-none-any.whl", hash = "sha256:ac1bbe05fd2991f160ebce24ffbac5f6d11d83dc90891255885223d42b3cd931", size = 9630 },
 ]

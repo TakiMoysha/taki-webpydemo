@@ -1,0 +1,2 @@
+class BaseServiceDevKitError(Exception):
+    pass
