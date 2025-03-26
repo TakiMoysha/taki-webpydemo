@@ -1799,6 +1799,7 @@ dependencies = [
     { name = "sqladmin-litestar-plugin" },
     { name = "structlog" },
     { name = "taskiq" },
+    { name = "uuid6" },
 ]
 
 [package.dev-dependencies]
@@ -1873,6 +1874,7 @@ requires-dist = [
     { name = "sqladmin-litestar-plugin", specifier = ">=0.2.0" },
     { name = "structlog", specifier = ">=25.1.0" },
     { name = "taskiq", specifier = ">=0.11.14" },
+    { name = "uuid6", specifier = ">=2024.7.10" },
 ]
 
 [package.metadata.requires-dev]
@@ -2120,6 +2122,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/23/f8/34e0c00f5f188604d336713e6a020fcf53b10998e8ab24735a39ab076740/uuid_utils-0.10.0-cp39-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:76d8d660f18ff6b767e319b1b5f927350cd92eafa4831d7ef5b57fdd1d91f974", size = 494111 },
     { url = "https://files.pythonhosted.org/packages/1a/52/b7f0066cc90a7a9c28d54061ed195cd617fde822e5d6ac3ccc88509c3c44/uuid_utils-0.10.0-cp39-abi3-win32.whl", hash = "sha256:6c11a71489338837db0b902b75e1ba7618d5d29f05fde4f68b3f909177dbc226", size = 173520 },
     { url = "https://files.pythonhosted.org/packages/8b/15/f04f58094674d333974243fb45d2c740cf4b79186fb707168e57943c84a3/uuid_utils-0.10.0-cp39-abi3-win_amd64.whl", hash = "sha256:11c55ae64f6c0a7a0c741deae8ca2a4eaa11e9c09dbb7bec2099635696034cf7", size = 182965 },
+]
+
+[[package]]
+name = "uuid6"
+version = "2024.7.10"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2c/56/2560a9f1ccab9e12b1b3478a3c870796cf4d8ee5652bb19b61751cced14a/uuid6-2024.7.10.tar.gz", hash = "sha256:2d29d7f63f593caaeea0e0d0dd0ad8129c9c663b29e19bdf882e864bedf18fb0", size = 8705 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d3/3e/4ae6af487ce5781ed71d5fe10aca72e7cbc4d4f45afc31b120287082a8dd/uuid6-2024.7.10-py3-none-any.whl", hash = "sha256:93432c00ba403751f722829ad21759ff9db051dea140bf81493271e8e4dd18b7", size = 6376 },
 ]
 
 [[package]]

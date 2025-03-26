@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from functools import singledispatchmethod
 from typing import Any, Protocol, overload, runtime_checkable
 
-from wsdk.exceptions import BaseServiceDevKitError
+from wsdk.exceptions import BaseDevKitError
 from wsdk.singleton import SingletonMixin
 
 
-class NoHandlerRegisteredError(BaseServiceDevKitError):
+class NoHandlerRegisteredError(BaseDevKitError):
     pass
 
 

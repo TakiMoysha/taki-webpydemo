@@ -27,13 +27,13 @@ SERVICE_SCHEMA = {
 }
 
 
-def validate_service(graph: dict):
+def validate_service(graph: dict) -> None:
     try:
         validate(instance=graph, schema=SERVICE_SCHEMA)
     except jsonschema_exceptions.ValidationError as error:
         error_path = "->".join([str(x) for x in error.absolute_path])
         msg = f"{error.message}:{error_path}"
         raise ValidationUserInpubtError(msg) from None
-    except jsonschema_exceptions.SchemaError as error:
+    except jsonschema_exceptions.SchemaError:
         msg = "Internal docs_lib exception."
         raise ValidationUserInpubtError(msg) from None
