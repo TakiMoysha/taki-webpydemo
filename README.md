@@ -31,6 +31,10 @@ The session mechanism is used as the main method (+ fixation), more about the re
 - [ ] work with litestar repositories
 - [ ] Mediator from wsdk
 
+### Registry
+
+- [ ] CircuitBreaker
+
 `value_objects` - неизменяемый объект
 `repositories` - неизменяемая коллекция объектов
 
