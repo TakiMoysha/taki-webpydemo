@@ -1786,6 +1786,7 @@ dependencies = [
     { name = "argparse" },
     { name = "click" },
     { name = "httptools" },
+    { name = "httpx" },
     { name = "jsonschema" },
     { name = "litestar", extra = ["jinja", "jwt", "redis", "structlog"] },
     { name = "litestar-granian" },
@@ -1809,6 +1810,7 @@ dev = [
     { name = "basedpyright" },
     { name = "coverage" },
     { name = "git-cliff" },
+    { name = "httpx" },
     { name = "hypothesis" },
     { name = "pre-commit" },
     { name = "pylint" },
@@ -1846,6 +1848,7 @@ nvim = [
 ]
 test = [
     { name = "coverage" },
+    { name = "httpx" },
     { name = "hypothesis" },
     { name = "pytest" },
     { name = "pytest-cov" },
@@ -1861,6 +1864,7 @@ requires-dist = [
     { name = "argparse", specifier = ">=1.4.0" },
     { name = "click", specifier = ">=8.1.8" },
     { name = "httptools", specifier = ">=0.6.4" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "jsonschema", specifier = ">=4.23.0" },
     { name = "litestar", extras = ["jinja", "jwt", "redis", "structlog"], specifier = ">=2.14.0" },
     { name = "litestar-granian", specifier = ">=0.10.0" },
@@ -1884,6 +1888,7 @@ dev = [
     { name = "basedpyright", specifier = ">=1.23.1" },
     { name = "coverage" },
     { name = "git-cliff", specifier = ">=2.7.0" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "hypothesis", specifier = ">=6.130.2" },
     { name = "pre-commit", specifier = ">=3.4.0" },
     { name = "pylint" },
@@ -1917,6 +1922,7 @@ linting = [
 nvim = [{ name = "basedpyright", specifier = ">=1.23.1" }]
 test = [
     { name = "coverage" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "hypothesis", specifier = ">=6.130.2" },
     { name = "pytest" },
     { name = "pytest-cov" },

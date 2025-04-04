@@ -44,7 +44,7 @@ debug-test target:
   uv run pytest -v -s -rP {{target}}
 
 check:
-  pre-commit run --all-files
+  uv pre-commit run --all-files
 
 # ============================== DOCS 
 routes:
