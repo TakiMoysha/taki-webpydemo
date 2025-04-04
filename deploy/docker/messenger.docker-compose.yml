@@ -1,0 +1,31 @@
+services:
+  web:
+    build: ./messenger.dockerfile
+    networks:
+      - bridge
+      - private
+    ports:
+      - 8000:8000
+    dependes_on:
+      - postgres
+    environment:
+      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}
+
+  postgres:
+    image: postgres
+    networks:
+      - private
+    environment:
+      - POSTGRES_USER=webpyuser
+      - POSTGRES_PASSWORD=webpyuser
+      - POSTGRES_DB=webpy_messenger
+    volumes:
+      - tmp/webpy_messenger/postgres:/var/lib/postgresql/data
+
+networks:
+  private:
+    name: private
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.17.1.0/29
