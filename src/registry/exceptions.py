@@ -1,7 +1,7 @@
-class BaseRegistryException(Exception):
+class BaseRegistryError(Exception):
     pass
 
 
 ## ==================================================== User Driven Exceptions
-class ValidationUserInpubtError(BaseRegistryException):
+class ValidationUserInputError(BaseRegistryError):
     pass

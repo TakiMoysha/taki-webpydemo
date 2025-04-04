@@ -66,5 +66,5 @@ class ServiceDTO(BaseDTO):
             return
 
         histdb.append(self)
+
         existing_username.remove(self.metadata)
-        self.deleted_at = datetime.now(UTC)
