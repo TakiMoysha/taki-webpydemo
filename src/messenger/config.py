@@ -1,14 +1,16 @@
 import logging
 import os
+import secrets
 from dataclasses import dataclass, field
 from functools import lru_cache
 
 
 @dataclass
 class AppSettings:
-    DEBUG = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in ("True", "true"))
-    NAME = field(default_factory=lambda: os.getenv("APP_NAME", "PyWeb Demo Project"))
-    URL = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:9001"))
+    DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in ("True", "true"))
+    NAME: str = field(default_factory=lambda: os.getenv("APP_NAME", "Demo - Messenger"))
+    URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:9001"))
+    SECRET_KEY: str = field(default_factory=lambda: os.getenv("APP_SECRET_KEY", secrets.token_hex()))
 
     @property
     def version(self) -> str:
@@ -30,24 +32,20 @@ class LoggingSettings:
 
 @dataclass
 class KafkaSettings:
-    BOOTSTRAP_SERVERS = field(default_factory=lambda: os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"))
+    BOOTSTRAP_SERVERS: str = field(default_factory=lambda: os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"))
 
 
 @dataclass
 class DatabaseSettings:
-    URL = field(
-        default_factory=lambda: os.getenv(
-            "DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"
-        )
-    )
+    URL: str = field(default_factory=lambda: os.getenv("DATABASE_URL", "sqlite+aiosqlite:///:memory:"))
 
 
 @dataclass
 class Settings:
-    app = field(default_factory=AppSettings)
-    kafka = field(default_factory=KafkaSettings)
-    db = field(default_factory=DatabaseSettings)
-    logging = field(default_factory=LoggingSettings)
+    app: AppSettings = field(default_factory=AppSettings)
+    kafka: KafkaSettings = field(default_factory=KafkaSettings)
+    db: DatabaseSettings = field(default_factory=DatabaseSettings)
+    logging: LoggingSettings = field(default_factory=LoggingSettings)
 
 
 @lru_cache

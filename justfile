@@ -22,7 +22,10 @@ docker-build:
 
 
 dev app=default_app:
-  uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug 
+  LITESTAR_DEV=True uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug 
+
+dev-messenger:
+  LITESTAR_DEBUGE=True uv run messenger run --reload
 
 stage threads='2' workers="2":
   uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads {{threads}} --workers {{workers}} 
@@ -44,7 +47,7 @@ debug-test target:
   uv run pytest -v -s -rP {{target}}
 
 check:
-  uv pre-commit run --all-files
+  uv run pre-commit run --all-files
 
 # ============================================================================== DOCS 
 routes:
