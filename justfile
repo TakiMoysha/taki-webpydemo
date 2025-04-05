@@ -8,10 +8,10 @@ alembic_config := "src/demoapp/db/migrations/alembic.ini"
 demo:
   docker-compose up --build
 
-# ============================== DEVELOPMENT 
+# ============================================================================== DEVELOPMENT 
 install:
-    pre-commit install
     uv run sync
+    uv run pre-commit install
 
 
 docker-run:
@@ -21,7 +21,7 @@ docker-build:
   docker build -t pywebdemo_app -f deploy/docker/demoapp.dockerfile .
 
 
-dev:
+dev app=default_app:
   uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug 
 
 stage threads='2' workers="2":
@@ -36,7 +36,7 @@ tunnel_up:
 # make-migrations:
 #   uv run {{default_app}} database make-migrations
 
-# ============================== TESTS
+# ============================================================================== TESTS
 test target="tests":
   uv run pytest -v -s --log-cli-level=INFO {{target}}
 
@@ -46,7 +46,7 @@ debug-test target:
 check:
   uv pre-commit run --all-files
 
-# ============================== DOCS 
+# ============================================================================== DOCS 
 routes:
   uv run litestar --app {{default_app}} routes
 

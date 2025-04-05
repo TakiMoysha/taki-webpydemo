@@ -31,6 +31,7 @@ dependencies = [
 
 [project.scripts]
 demoapp = "demoapp.__main__:run_cli"
+messenger = "messenger.__main__:run_cli"
 
 [build-system]
 build-backend = "hatchling.build"
@@ -39,7 +40,7 @@ requires = ["hatchling", "nodeenv"]
 [tool.hatch.build]
 dev-mode-dirs = ["src/"]
 include = ["public/**/*", "src/**/*.sql"]
-packages = ["src/demoapp", "src/wsdk"]
+packages = ["src/demoapp", "src/wsdk", "src/messenger", "src/registry"]
 
 [tool.hatch.version]
 path = "src/demoapp/__about__.py"
