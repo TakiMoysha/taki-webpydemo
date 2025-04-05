@@ -1,7 +1,7 @@
 from litestar.openapi.config import OpenAPIConfig
 from litestar.openapi.plugins import ScalarRenderPlugin
 
-from demoapp.config.base import get_settings
+from messenger.config import get_settings
 
 settings = get_settings()
 config = OpenAPIConfig(

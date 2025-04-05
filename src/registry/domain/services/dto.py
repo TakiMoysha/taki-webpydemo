@@ -1,10 +1,8 @@
-from abc import ABC
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Self
 from uuid import UUID
 
-from registry.domain.exceptions import DomainError
 from registry.domain.services.exceptions import ServiceAlreadyExistsError, ServiceCreationError
 from registry.domain.services.value_objects import ServiceAddress, ServiceId, ServiceName
 from registry.GLOBSCOPE import ServiceMetadata
@@ -12,7 +10,7 @@ from wsdk.events import BaseEvent
 
 
 @dataclass
-class BaseDTO(ABC):
+class BaseDTO:
     _events: list[BaseEvent] = field(init=False, default_factory=list, repr=False, hash=False, compare=False)
 
     def record_event(self, event: BaseEvent) -> None:
@@ -68,3 +66,6 @@ class ServiceDTO(BaseDTO):
         histdb.append(self)
 
         existing_username.remove(self.metadata)
+
+
+type ServiceDTOs = ServiceDTO

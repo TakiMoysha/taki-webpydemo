@@ -1,8 +1,8 @@
 from litestar import Litestar
 
 
-def create_messenger() -> Litestar:
-    from messenger.config.app import get_settings
+def create_app() -> Litestar:
+    from messenger.config import get_settings
     from messenger.server.openapi import config as openapi_config
     from messenger.server.routers import route_handlers
 

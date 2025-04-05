@@ -16,15 +16,17 @@ from sqlalchemy.ext.asyncio.engine import AsyncEngine, create_async_engine
 from demoapp.config.consts import BAD_VALUE
 from demoapp.lib.utils import get_random_string
 
-APP_DIR: Final[Path] = module_to_os_path("app")
-TRUE_VALUES = ("1", "true", "True", "T")
+APP_DIR: Final[Path] = module_to_os_path("demoapp")
+TRUE_VALUES = ("True", "true")
 
 
 @dataclass
 class AppSettings:
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:8000"))
     DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in TRUE_VALUES)
-    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", get_random_string(32)))
+    SECRET_KEY: str = field(
+        default_factory=lambda: os.getenv("SECRET_KEY", get_random_string(32)), repr=False, hash=False
+    )
     NAME: str = field(default_factory=lambda: "PyWeb Demo Project")
     ALLOWED_CORS_ORIGINS: list[str] | str = field(default_factory=lambda: os.getenv("ALLOWED_CORS_ORIGINS", '["*"]'))
     CSRF_COOKIE_NAME: str = field(default_factory=lambda: "csrftoken")
@@ -240,9 +242,9 @@ class SaqSettings:
 class AppConfig:
     app: AppSettings = field(default_factory=AppSettings)
     db: DatabaseSettings = field(default_factory=DatabaseSettings)
-    cache: CacheSettings = field(default_factory=CacheSettings)
     log: LogSettings = field(default_factory=LogSettings)
     saq: SaqSettings = field(default_factory=SaqSettings)
+    cache: CacheSettings = field(default_factory=CacheSettings)
 
     @classmethod
     def from_env(cls, dotenv_filename: str = ".env") -> Self:
