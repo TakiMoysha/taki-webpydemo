@@ -1,0 +1,20 @@
+[project]
+name = "registry"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "TakiMoysha", email = "takimoysha@users.noreply.github.com" },
+]
+requires-python = ">=3.12"
+dependencies = []
+dynamic = ["version"]
+
+[tool.hatch.version]
+path = "registry/__about__.py"
+
+[project.scripts]
+registry = "registry:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

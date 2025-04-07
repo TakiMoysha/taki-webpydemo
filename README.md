@@ -206,4 +206,5 @@ The session mechanism is used as the main method (+ fixation), more about the re
 # References & Links
 
 1. [Session Management Cheat Sheet / cheatsheetseries.owasp.org](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
-2. []()
+2. [Python monorepo: an example / tweag.io](https://www.tweag.io/blog/2023-04-04-python-monorepo-1/)
+3. []()

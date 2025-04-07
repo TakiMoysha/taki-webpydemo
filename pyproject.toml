@@ -1,112 +1,76 @@
-[project]
-name = "taki-webpydemo"
-description = "Used as a sandbox to try out the functionality."
-dynamic = ["version"]
-authors = [{ name = "TakiMoysha", email = "mpwema782@gmail.com" }]
-keywords = ["litestar", "fullstack", "api", "asgi", "microservices"]
-readme = "README.md"
-license = { file = "LICENSE" }
-requires-python = ">=3.12"
-dependencies = [
-  "advanced-alchemy[uuid]>=0.31.0",
-  "argparse>=1.4.0",
-  "click>=8.1.8",
-  "httptools>=0.6.4",
-  "httpx>=0.28.1",
-  "jsonschema>=4.23.0",
-  "litestar-granian>=0.10.0",
-  "litestar-saq>=0.5.0",
-  "litestar-users>=1.6.1",
-  "litestar-vite[nodeenv]>=0.13.0",
-  "litestar[jinja,jwt,redis,structlog]>=2.14.0",
-  "orjson>=3.10.15",
-  "pydantic>=2.10.6",
-  "python-dotenv>=1.0.1",
-  "python-slugify>=8.0.4",
-  "sqladmin-litestar-plugin>=0.2.0",
-  "structlog>=25.1.0",
-  "taskiq>=0.11.14",
-  "uuid6>=2024.7.10",
-]
+# [project]
+# name = "taki-webpydemo"
+# description = "Used as a sandbox to try out the functionality."
+# dynamic = ["version"]
+# authors = [{ name = "TakiMoysha", email = "mpwema782@gmail.com" }]
+# keywords = ["litestar", "fullstack", "api", "asgi", "microservices"]
+# readme = "README.md"
+# license = { file = "LICENSE" }
+# requires-python = ">=3.12"
+# dependencies = [
+#   "advanced-alchemy[uuid]>=0.31.0",
+#   "argparse>=1.4.0",
+#   "click>=8.1.8",
+#   "httptools>=0.6.4",
+#   "httpx>=0.28.1",
+#   "jsonschema>=4.23.0",
+#   "litestar-granian>=0.10.0",
+#   "litestar-saq>=0.5.0",
+#   "litestar-users>=1.6.1",
+#   "litestar-vite[nodeenv]>=0.13.0",
+#   "litestar[jinja,jwt,redis,structlog]>=2.14.0",
+#   "orjson>=3.10.15",
+#   "pydantic>=2.10.6",
+#   "python-dotenv>=1.0.1",
+#   "python-slugify>=8.0.4",
+#   "sqladmin-litestar-plugin>=0.2.0",
+#   "structlog>=25.1.0",
+#   "taskiq>=0.11.14",
+#   "uuid6>=2024.7.10",
+# ]
 
-[project.scripts]
-demoapp = "demoapp.__main__:run_cli"
-messenger = "messenger.__main__:run_cli"
+# [tool.uv]
+# default-groups = ["nvim", "dev", "docs", "linting", "test"]
 
-[build-system]
-build-backend = "hatchling.build"
-requires = ["hatchling", "nodeenv"]
+# [tool.uv.workspace]
+# members = ["messenger", "registry", "demoapp", "libs/microwrapper", "services/proxy", "libs/wsdk"]
 
-[tool.hatch.build]
-dev-mode-dirs = ["src/"]
-include = ["public/**/*", "src/**/*.sql"]
-packages = ["src/demoapp", "src/wsdk", "src/messenger", "src/registry"]
-
-[tool.hatch.version]
-path = "src/demoapp/__about__.py"
-
-[tool.uv]
-default-groups = ["nvim", "dev", "docs", "linting", "test"]
-
-[dependency-groups]
-dev = [
-  { include-group = "nvim" },
-  { include-group = "docs" },
-  { include-group = "linting" },
-  { include-group = "test" },
-
-  "aiosqlite>=0.21.0",
-]
-nvim = ["basedpyright>=1.23.1"]
-docs = ["git-cliff>=2.7.0"]
-linting = [
-  "pre-commit>=3.4.0",
-  "ruff>=0.0.287",
-  "slotscheck",
-  "types-click",
-  "types-passlib",
-  "types-python-jose",
-  "types-pyyaml",
-  "types-redis",
-  "pylint",
-  "asyncpg-stubs",
-]
-test = [
-  "pytest",
-  "pytest-xdist",
-  "pytest-mock",
-  "pytest-cov",
-  "coverage",
-  "pytest-sugar",
-  "pytest-databases[redis]>=0.1.0",
-  "hypothesis>=6.130.2",
-  "httpx>=0.28.1",
-]
+# [dependency-groups]
+# dev = [
+#   { include-group = "nvim" },
+#   { include-group = "docs" },
+#   { include-group = "linting" },
+#   { include-group = "test" },
+#
+#   "aiosqlite>=0.21.0",
+# ]
+# nvim = ["basedpyright>=1.23.1"]
+# docs = ["git-cliff>=2.7.0"]
+# linting = [
+#   "pre-commit>=3.4.0",
+#   "ruff>=0.0.287",
+#   "slotscheck",
+#   "types-click",
+#   "types-passlib",
+#   "types-python-jose",
+#   "types-pyyaml",
+#   "types-redis",
+#   "pylint",
+#   "asyncpg-stubs",
+# ]
+# test = [
+#   "pytest",
+#   "pytest-xdist",
+#   "pytest-mock",
+#   "pytest-cov",
+#   "coverage",
+#   "pytest-sugar",
+#   "pytest-databases[redis]>=0.1.0",
+#   "hypothesis>=6.130.2",
+#   "httpx>=0.28.1",
+# ]
 
 [tool.ruff]
-exclude = [
-  ".bzr",
-  ".direnv",
-  ".eggs",
-  ".git",
-  ".hg",
-  ".mypy_cache",
-  ".nox",
-  ".pants.d",
-  ".ruff_cache",
-  ".svn",
-  ".tox",
-  ".venv",
-  "__pypackages__",
-  "_build",
-  "buck-out",
-  "build",
-  "dist",
-  "node_modules",
-  "venv",
-  '__pycache__',
-  "src/demoapp/db/migrations/versions/*.py",
-]
 fix = true
 line-length = 120
 lint.fixable = ["ALL"]
@@ -182,13 +146,10 @@ convention = "google"
 "docs/conf.py" = ["FIX002", "ARG001", "INP001"]
 "scripts/*.py" = ["INP001", "ERA001"]
 "scripts/**/*.*" = ["D", "ARG", "EM", "TRY", "G", "FBT", "INP001"]
-"src/demoapp/db/migrations/versions/*.py" = ["ANN201", "INP001"]
 "tests/*.py" = ['D103', 'S101', 'D104']
 
 [tool.pytest.ini_options]
 addopts = ["-ra", "--ignore", "migrations"]
-# env_files = [".env.testing"]
-# env_override_existing_values = 1
 filterwarnings = [
   "ignore::DeprecationWarning:pkg_resources",
   "ignore::DeprecationWarning:google.*",
@@ -260,7 +221,7 @@ body = """
 {% endfor %}
 """
 footer = """
-<!-- Taki WebPyDemo Changelog -->
+<!-- Demo Changelog -->
 """
 trim = true
 postprocessors = [

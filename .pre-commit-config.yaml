@@ -10,7 +10,7 @@ repos:
     rev: v0.19.1
     hooks:
       - id: slotscheck # check for unused slots
-        exclude: test_*|legacy|docs|migrations|scripts|
+        exclude: test_*|docs|migrations|scripts|
         entry: env PYTHONPATH=src slotscheck
 
   - repo: local

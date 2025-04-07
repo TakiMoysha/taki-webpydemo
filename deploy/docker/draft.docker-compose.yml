@@ -1,0 +1,26 @@
+demoapp:
+  services:
+    requests:
+      data: ""
+      swagger:
+        path: "swagger"
+        file: "swagger.yaml"
+        url: "/ui/"
+        project_dir: "packages/demoapp"
+
+      tracer:
+        client: "jaeger"
+        host: "localhost"
+        component_name: "demoapp"
+
+      metrics: true
+
+    config:
+      DEBUG: false
+      TESTING: false
+      APP_NAME: "demoapp"
+      APPLICATION_ROOT: "/"
+      SQLALCHEMY_TRACK_MODIFICATIONS: true
+      SECRET_KEY: "dont_expose_me"
+      DATABASE: ":memory:"
+      SQLALCHEMY_DATABASE: "sqlite+aiosqlite:///:memory:"

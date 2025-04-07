@@ -1,3 +1,11 @@
+
+[group: "wsdk"]
+[working-directory: "libs/wsdk"]
+test-wsdk target="" *ARGS:
+  uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
+
+# ============================================================================== WIP
+
 set dotenv-load
 
 default_env := "stage"
@@ -22,10 +30,10 @@ docker-build:
 
 
 dev app=default_app:
-  LITESTAR_DEV=True uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug 
+  LITESTAR_DEBUG=True uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug 
 
 dev-messenger:
-  LITESTAR_DEBUGE=True uv run messenger run --reload
+  cd messenger; LITESTAR_DEBUG=True uv run dev run --reload
 
 stage threads='2' workers="2":
   uv run server --app {{default_app}} run --reload --host 0.0.0.0 --port 8000 --threads {{threads}} --workers {{workers}} 
