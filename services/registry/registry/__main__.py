@@ -9,9 +9,8 @@ def run_cli() -> None:
 
     try:
         from litestar.__main__ import run_cli as run_litestar_cli
-
     except ImportError as exc:
-        print("Failed to import litestar: ", str(exc), file=sys.stderr)
+        print("Failed to import litestar: ", str(exc), file=sys.stderr)  # noqa: T201
         sys.exit(1)
 
     run_litestar_cli()

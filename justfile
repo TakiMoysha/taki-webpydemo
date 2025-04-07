@@ -1,8 +1,14 @@
 
+[group: "registry"]
+[working-directory: "services/registry"]
+dev-registry *ARGS:
+  uv run registry run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug {{ ARGS }}
+
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]
 test-wsdk target="" *ARGS:
   uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
+
 
 # ============================================================================== WIP
 

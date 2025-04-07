@@ -1,12 +1,3 @@
-# [project]
-# name = "taki-webpydemo"
-# description = "Used as a sandbox to try out the functionality."
-# dynamic = ["version"]
-# authors = [{ name = "TakiMoysha", email = "mpwema782@gmail.com" }]
-# keywords = ["litestar", "fullstack", "api", "asgi", "microservices"]
-# readme = "README.md"
-# license = { file = "LICENSE" }
-# requires-python = ">=3.12"
 # dependencies = [
 #   "advanced-alchemy[uuid]>=0.31.0",
 #   "argparse>=1.4.0",
@@ -31,10 +22,6 @@
 
 # [tool.uv]
 # default-groups = ["nvim", "dev", "docs", "linting", "test"]
-
-# [tool.uv.workspace]
-# members = ["messenger", "registry", "demoapp", "libs/microwrapper", "services/proxy", "libs/wsdk"]
-
 # [dependency-groups]
 # dev = [
 #   { include-group = "nvim" },
@@ -120,8 +107,8 @@ lint.ignore = [
 lint.select = ["ALL"]
 # Allow unused variables when underscore-prefixed.
 lint.dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-src = ["src", "tests/"]
-target-version = "py311"
+src = ["libs/**/*", "services/**/*"]
+target-version = "py312"
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -148,48 +135,29 @@ convention = "google"
 "scripts/**/*.*" = ["D", "ARG", "EM", "TRY", "G", "FBT", "INP001"]
 "tests/*.py" = ['D103', 'S101', 'D104']
 
-[tool.pytest.ini_options]
-addopts = ["-ra", "--ignore", "migrations"]
-filterwarnings = [
-  "ignore::DeprecationWarning:pkg_resources",
-  "ignore::DeprecationWarning:google.*",
-  "ignore::DeprecationWarning:passlib.*",
-  "ignore::DeprecationWarning:aiosql.*",
-  "ignore::DeprecationWarning:litestar.constants.*",
-  "ignore::DeprecationWarning:litestar.utils.*",
-  "ignore::DeprecationWarning:litestar.cli.*",
-  "ignore::DeprecationWarning:httpx._client",
-]
-testpaths = ["tests"]
-
-[tool.coverage.report]
-exclude_lines = [
-  'if TYPE_CHECKING:',
-  'pragma: no cover',
-  "if __name__ == .__main__.:",
-  'def __repr__',
-  'if self\.debug:',
-  'if settings\.DEBUG',
-  'raise AssertionError',
-  'raise NotImplementedError',
-  'if 0:',
-  'class .*\bProtocol\):',
-  '@(abc\.)?abstractmethod',
-]
-omit = ["*/tests/*"]
-show_missing = true
-
-[tool.coverage.run]
-branch = true
-omit = ["tests/*", "**/*/migrations/**/*.py", "scripts/*"]
-
 [tool.slotscheck]
-strict-imports = false
+# treat failed imports as errors
+strict-imports = true
 
 [tool.codespell]
 skip = 'uv.lock, package-lock.json'
 
+[tool.git-cliff.git]
+commit_parsers = [
+  { message = "^feat", group = "Features" },
+  { message = "^fix", group = "Bug Fixes" },
+  { message = "^doc", group = "Documentation" },
+  { message = "^perf", group = "Performance" },
+  { message = "^refactor", group = "Refactor" },
+  { message = "^style", group = "Styling" },
+  { message = "^test", group = "Testing" },
+  { message = "^chore\\(skip\\)", skip = true },
+  { message = "^chore", group = "Miscellaneous Tasks" },
+  { body = ".*security", group = "Security" },
+]
+
 [tool.git-cliff.changelog]
+trim = true
 header = """
 # Changelog\n
 All commits to this project will be documented in this file.\n
@@ -223,32 +191,3 @@ body = """
 footer = """
 <!-- Demo Changelog -->
 """
-trim = true
-postprocessors = [
-  # { pattern = '<REPO>', replace = "https://github.com/orhun/git-cliff" }, # replace repository URL
-]
-
-[tool.git-cliff.git]
-conventional_commits = true
-filter_unconventional = true
-filter_commits = false
-split_commits = false
-commit_parsers = [
-  { message = "^feat", group = "Features" },
-  { message = "^fix", group = "Bug Fixes" },
-  { message = "^doc", group = "Documentation" },
-  { message = "^perf", group = "Performance" },
-  { message = "^refactor", group = "Refactor" },
-  { message = "^style", group = "Styling" },
-  { message = "^test", group = "Testing" },
-  { message = "^chore\\(release\\) prepare for", skip = true },
-  { message = "^chore\\(skip\\)", skip = true },
-  { message = "^chore", group = "Miscellaneous Tasks" },
-  { body = ".*security", group = "Security" },
-]
-protect_breaking_commits = false
-tag_pattern = "v[0-9]*"
-skip_tags = "v0.1.0-beta.1"
-ignore_tags = ""
-topo_order = false
-sort_commits = "oldest"

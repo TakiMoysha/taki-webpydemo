@@ -3,7 +3,7 @@ name = "messenger"
 description = "Add your description here"
 readme = "README.md"
 authors = [
-    { name = "TakiMoysha", email = "takimoysha@users.noreply.github.com" }
+    { name = "TakiMoysha", email = "takimoysha@users.noreply.github.com" },
 ]
 requires-python = ">=3.12"
 dependencies = []
@@ -19,3 +19,20 @@ dev = "messenger"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+
+[tool.pytest.ini_options]
+addopts = ["-ra", "--ignore", "migrations"]
+filterwarnings = [
+    "ignore::DeprecationWarning:pkg_resources",
+    "ignore::DeprecationWarning:google.*",
+    "ignore::DeprecationWarning:passlib.*",
+    "ignore::DeprecationWarning:aiosql.*",
+    "ignore::DeprecationWarning:litestar.constants.*",
+    "ignore::DeprecationWarning:litestar.utils.*",
+    "ignore::DeprecationWarning:litestar.cli.*",
+    "ignore::DeprecationWarning:httpx._client",
+]
+testpaths = ["test"]
+
+
