@@ -8,6 +8,7 @@ from wsdk.exceptions import BaseDevKitError
 from wsdk.mixins import SingletonMixin
 
 
+@dataclass
 class NoHandlerRegisteredError(BaseDevKitError):
     pass
 

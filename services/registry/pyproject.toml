@@ -25,12 +25,6 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 path = "registry/__about__.py"
 source = "regex"
-# [tool.hatch.dependencies]
-# wsdk = { path = "../../libs/wsdk" }
-# [tool.hatch.build.targets.wheel]
-# only-include = ["wsdk", "registry"]
-# [tool.hatch.build.targets.sources]
-# wsdk = "libs/wsdk"
 
 [tool.pytest.ini_options]
 testpaths = ["test"]

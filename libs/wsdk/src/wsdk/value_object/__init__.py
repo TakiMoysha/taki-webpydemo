@@ -5,7 +5,7 @@ from typing import TypeVar
 from wsdk.validators import IValidator
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(slots=True)
 class BaseValueObject[T](ABC):
     value: T
     validators: tuple[IValidator] | None
