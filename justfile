@@ -2,7 +2,7 @@
 [group: "registry"]
 [working-directory: "services/registry"]
 dev-registry *ARGS:
-  uv run registry run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug {{ ARGS }}
+  uv run server run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug {{ ARGS }}
 
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]

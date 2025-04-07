@@ -3,18 +3,17 @@ name = "demoapp"
 description = "Add your description here"
 readme = "README.md"
 authors = [
-    { name = "TakiMoysha", email = "takimoysha@users.noreply.github.com" }
+    { name = "TakiMoysha", email = "takimoysha@users.noreply.github.com" },
 ]
 requires-python = ">=3.12"
 dependencies = []
 dynamic = ["version"]
 
 [tool.hatch.version]
-path = "registry/__about__.py"
-
+path = "demoapp/__about__.py"
 
 [project.scripts]
-demoapp = "demoapp:main"
+demoapp = "demoapp.__main__:run_cli"
 
 [build-system]
 requires = ["hatchling"]

@@ -1,3 +1,28 @@
+# [tool.uv.sources]
+# microwrapper = { path = "libs/microwrapper", editable = true }
+# wsdk = { path = "libs/wsdk", editable = true }
+# registry = { path = "services/registry", editable = true }
+#
+[tool.uv.workspace]
+members = [
+  "libs/*",
+  "services/*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+addopts = ["-ra", "--ignore", "migrations"]
+filterwarnings = [
+    "ignore::DeprecationWarning:pkg_resources",
+    "ignore::DeprecationWarning:google.*",
+    "ignore::DeprecationWarning:passlib.*",
+    "ignore::DeprecationWarning:aiosql.*",
+    "ignore::DeprecationWarning:litestar.constants.*",
+    "ignore::DeprecationWarning:litestar.utils.*",
+    "ignore::DeprecationWarning:litestar.cli.*",
+    "ignore::DeprecationWarning:httpx._client",
+]
+
 # dependencies = [
 #   "advanced-alchemy[uuid]>=0.31.0",
 #   "argparse>=1.4.0",
@@ -5,7 +30,6 @@
 #   "httptools>=0.6.4",
 #   "httpx>=0.28.1",
 #   "jsonschema>=4.23.0",
-#   "litestar-granian>=0.10.0",
 #   "litestar-saq>=0.5.0",
 #   "litestar-users>=1.6.1",
 #   "litestar-vite[nodeenv]>=0.13.0",
