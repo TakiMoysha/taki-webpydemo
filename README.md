@@ -13,6 +13,8 @@ The session mechanism is used as the main method (+ fixation), more about the re
 
 ## TODO
 
+- [ ] global build packages
+
 - [ ] Authentication
 - [ ] CRUD operations
 - [ ] ? Forms
