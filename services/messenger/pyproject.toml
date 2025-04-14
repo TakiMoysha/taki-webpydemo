@@ -13,23 +13,8 @@ dynamic = ["version"]
 path = "messenger/__about__.py"
 
 [project.scripts]
-messenger = "messenger.__main__:run_cli"
+server_messenger = "messenger.__main__:run_cli"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-
-[tool.pytest.ini_options]
-addopts = ["-ra", "--ignore", "migrations"]
-filterwarnings = [
-    "ignore::DeprecationWarning:pkg_resources",
-    "ignore::DeprecationWarning:google.*",
-    "ignore::DeprecationWarning:passlib.*",
-    "ignore::DeprecationWarning:aiosql.*",
-    "ignore::DeprecationWarning:litestar.constants.*",
-    "ignore::DeprecationWarning:litestar.utils.*",
-    "ignore::DeprecationWarning:litestar.cli.*",
-    "ignore::DeprecationWarning:httpx._client",
-]
-testpaths = ["test"]

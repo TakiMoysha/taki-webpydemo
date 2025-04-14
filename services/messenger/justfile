@@ -1,4 +1,0 @@
-
-
-dev:
-  uv run messenger --reload

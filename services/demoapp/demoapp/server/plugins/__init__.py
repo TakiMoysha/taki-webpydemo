@@ -5,7 +5,6 @@ from litestar.channels import ChannelsPlugin
 from litestar.channels.backends.memory import MemoryChannelsBackend
 from litestar.plugins import PluginProtocol
 from litestar.plugins.structlog import StructlogPlugin
-from litestar_granian import GranianPlugin
 from litestar_saq import SAQPlugin
 from litestar_users import LitestarUsersPlugin
 from litestar_vite import VitePlugin
@@ -19,7 +18,6 @@ __all__ = [
     "alchemy",
     "app_config",
     "get_plugins",
-    "granian",
     "saq",
     "structlog",
     "users_plugin",
@@ -28,7 +26,6 @@ __all__ = [
 saq = SAQPlugin(config=config.saq_config)
 structlog = StructlogPlugin(config=config.log_config)
 alchemy = SQLAlchemyPlugin(config=config.alchemy_config)
-granian = GranianPlugin()
 app_config = ServerPlugin()
 channels_plugin = ChannelsPlugin(
     backend=MemoryChannelsBackend(history=20),
@@ -44,7 +41,6 @@ def get_plugins() -> Sequence[PluginProtocol]:
         structlog,
         saq,
         alchemy,
-        granian,
         users_plugin,
     }
     return [plugin for plugin in plugins if plugin is not None]

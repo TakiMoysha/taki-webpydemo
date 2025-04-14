@@ -26,8 +26,8 @@ class LoggingSettings:
     SQLALCHEMY_LEVEL: str = logging._levelToName[logging.WARNING]
     UVICORN_ACCESS_LEVEL: str = logging._levelToName[logging.ERROR]
     UVICORN_ERROR_LEVEL: str = logging._levelToName[logging.WARNING]
-    GRANIAN_ACCESS_LEVEL: str = logging._levelToName[logging.ERROR]
-    GRANIAN_ERROR_LEVEL: str = logging._levelToName[logging.WARNING]
+    # GRANIAN_ACCESS_LEVEL: str = logging._levelToName[logging.ERROR]
+    # GRANIAN_ERROR_LEVEL: str = logging._levelToName[logging.WARNING]
 
 
 @dataclass
