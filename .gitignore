@@ -98,5 +98,6 @@ venv.bak/
 .pytype/
 
 # tmp content
-tmp/dumps/*.json
-tmp/*.json
+tmp/*
+!tmp/.gitkeep
+

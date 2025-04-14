@@ -2,25 +2,31 @@
 set dotenv-load
 
 # ============================================================================== DEMO
+# start project
 demo:
   docker-compose up --build
 
 # ============================================================================== WIP
+
+# docs string
 [group: "messenger"]
 [working-directory: "services/messenger"]
 dev-messenger *ARGS:
   LITESTAR_DEBUG=True
   UV_PROJECT="services/messenger"
-  uv run server_messenger run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug {{ ARGS }}
+  uv run server_messenger run --reload --host 0.0.0.0 --port 8000 --workers 2 --debug {{ ARGS }}
 
 
+# docs string
 [group: "registry"]
 [working-directory: "services/registry"]
 dev-registry *ARGS:
   LITESTAR_DEBUG=True
   UV_PROJECT="services/registry"
-  uv run server_registry run --reload --host 0.0.0.0 --port 8000 --threads 1 --workers 2 --debug {{ ARGS }}
+  uv run server_registry run --reload --host 0.0.0.0 --port 8000 --workers 2 --debug {{ ARGS }}
 
+
+# docs string
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]
 test-wsdk target="" *ARGS:
