@@ -18,6 +18,7 @@ linting = [
 ]
 test = [
   "pytest",
+  "pytest-asyncio",
   "pytest-xdist",
   "pytest-mock",
   "pytest-cov",

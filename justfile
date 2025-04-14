@@ -18,6 +18,12 @@ dev-messenger *ARGS:
   UV_PROJECT="services.messenger" # debug
   uv run server_messenger run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
 
+[group: "messenger"]
+[working-directory: "services/messenger"]
+test-messenger target="" *ARGS:
+  LITESTAR_DEBUG=True
+  UV_PROJECT="services.messenger" # debug
+  uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
 
 # docs string
 [group: "registry"]

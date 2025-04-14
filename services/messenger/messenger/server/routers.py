@@ -1,5 +1,4 @@
 from litestar.types import ControllerRouterHandler
+from messenger.router import api_router, ws_router
 
-from messenger.api.routers import api_router
-
-route_handlers: tuple[ControllerRouterHandler] = (api_router,)
+route_handlers: tuple[ControllerRouterHandler, ...] = (api_router, ws_router)

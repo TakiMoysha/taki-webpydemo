@@ -3,7 +3,7 @@
 ## Install
 
 ```shell
-uv run sync
+uv run sync --all-groups
 uv run pre-commit install
 ```
 

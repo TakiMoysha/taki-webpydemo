@@ -34,6 +34,7 @@ test = [
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "hypothesis", specifier = ">=6.130.2" },
     { name = "pytest" },
+    { name = "pytest-asyncio" },
     { name = "pytest-cov" },
     { name = "pytest-databases", extras = ["redis"], specifier = ">=0.1.0" },
     { name = "pytest-mock" },
@@ -108,6 +109,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/39/33/536530122a22a7504b159bccaf30a1f76aa19d23028bd8b5009eb9b2efea/astroid-3.3.9.tar.gz", hash = "sha256:622cc8e3048684aa42c820d9d218978021c3c3d174fb03a9f0d615921744f550", size = 398731 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/de/80/c749efbd8eef5ea77c7d6f1956e8fbfb51963b7f93ef79647afd4d9886e3/astroid-3.3.9-py3-none-any.whl", hash = "sha256:d05bfd0acba96a7bd43e222828b7d9bc1e138aaeb0649707908d3702a9831248", size = 275339 },
+]
+
+[[package]]
+name = "asyncio"
+version = "3.4.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/54/054bafaf2c0fb8473d423743e191fcdf49b2c1fd5e9af3524efbe097bafd/asyncio-3.4.3.tar.gz", hash = "sha256:83360ff8bc97980e4ff25c964c7bd3923d333d177aa4f7fb736b019f26c7cb41", size = 204411 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/22/74/07679c5b9f98a7cb0fc147b1ef1cc1853bc07a4eb9cb5731e24732c5f773/asyncio-3.4.3-py3-none-any.whl", hash = "sha256:c4d18b22701821de07bd6aea8b53d21449ec0ec5680645e5317062ea21817d2d", size = 101767 },
 ]
 
 [[package]]
@@ -751,8 +761,8 @@ name = "messenger"
 source = { editable = "services/messenger" }
 dependencies = [
     { name = "advanced-alchemy", extra = ["uuid"] },
+    { name = "asyncio" },
     { name = "litestar", extra = ["jwt", "standard", "structlog"] },
-    { name = "requests" },
     { name = "tabulate" },
     { name = "wsdk" },
 ]
@@ -760,8 +770,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "advanced-alchemy", extras = ["uuid"], specifier = ">=0.31.0" },
+    { name = "asyncio", specifier = ">=0.27.0" },
     { name = "litestar", extras = ["jwt", "standard", "structlog"], specifier = ">=2.15.2" },
-    { name = "requests", specifier = ">=2.32.3" },
     { name = "tabulate", specifier = ">=0.9.0" },
     { name = "wsdk", editable = "libs/wsdk" },
 ]
@@ -988,6 +998,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-asyncio"
+version = "0.26.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytest" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8e/c4/453c52c659521066969523e87d85d54139bbd17b78f09532fb8eb8cdb58e/pytest_asyncio-0.26.0.tar.gz", hash = "sha256:c4df2a697648241ff39e7f0e4a73050b03f123f760673956cf0d72a4990e312f", size = 54156 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/7f/338843f449ace853647ace35870874f69a764d251872ed1b4de9f234822c/pytest_asyncio-0.26.0-py3-none-any.whl", hash = "sha256:7b51ed894f4fbea1340262bdae5135797ebbe21d8638978e35d31c6d19f72fb0", size = 19694 },
+]
+
+[[package]]
 name = "pytest-cov"
 version = "6.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1121,7 +1143,6 @@ source = { editable = "services/registry" }
 dependencies = [
     { name = "advanced-alchemy", extra = ["uuid"] },
     { name = "litestar", extra = ["jwt", "standard", "structlog"] },
-    { name = "requests" },
     { name = "tabulate" },
     { name = "wsdk" },
 ]
@@ -1130,7 +1151,6 @@ dependencies = [
 requires-dist = [
     { name = "advanced-alchemy", extras = ["uuid"], specifier = ">=0.31.0" },
     { name = "litestar", extras = ["jwt", "standard", "structlog"], specifier = ">=2.15.2" },
-    { name = "requests", specifier = ">=2.32.3" },
     { name = "tabulate", specifier = ">=0.9.0" },
     { name = "wsdk", editable = "libs/wsdk" },
 ]
