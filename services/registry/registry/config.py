@@ -8,7 +8,7 @@ TRUE_VALUES = ["True", "true", "1", "yes", "y"]
 @dataclass(frozen=True, slots=True)
 class AppSettings:
     DEBUG: bool = field(default_factory=lambda: os.getenv("DEBUG", "False") in TRUE_VALUES)
-    NAME: str = field(default_factory=lambda: os.getenv("APP_NAME", "Registry"))
+    NAME: str = field(default_factory=lambda: os.getenv("APP_NAME", "Demo - Registry"))
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:10001"))
     SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "dont_expose_me"), repr=False)
 
@@ -32,4 +32,5 @@ class Settings:
 
 @lru_cache
 def get_settings() -> Settings:
+    print(Settings())
     return Settings()

@@ -98,6 +98,6 @@ venv.bak/
 .pytype/
 
 # tmp content
-tmp/*
-!tmp/.gitkeep
+**/tmp/*
+!**/tmp/.gitkeep
 

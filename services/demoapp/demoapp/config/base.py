@@ -24,9 +24,7 @@ TRUE_VALUES = ("True", "true")
 class AppSettings:
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:8000"))
     DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in TRUE_VALUES)
-    SECRET_KEY: str = field(
-        default_factory=lambda: os.getenv("SECRET_KEY", get_random_string(32)), repr=False, hash=False
-    )
+    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "dont_expose_me"), repr=False, hash=False)
     NAME: str = field(default_factory=lambda: "PyWeb Demo Project")
     ALLOWED_CORS_ORIGINS: list[str] | str = field(default_factory=lambda: os.getenv("ALLOWED_CORS_ORIGINS", '["*"]'))
     CSRF_COOKIE_NAME: str = field(default_factory=lambda: "csrftoken")

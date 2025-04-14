@@ -7,6 +7,29 @@ uv run sync
 uv run pre-commit install
 ```
 
+**Dependencies**
+
+```list
+"advanced-alchemy[uuid]>=0.31.0",
+"argparse>=1.4.0",
+"click>=8.1.8",
+"httptools>=0.6.4",
+"httpx>=0.28.1",
+"jsonschema>=4.23.0",
+"litestar-saq>=0.5.0",
+"litestar-users>=1.6.1",
+"litestar-vite[nodeenv]>=0.13.0",
+"litestar[jinja,jwt,redis,structlog]>=2.14.0",
+"orjson>=3.10.15",
+"pydantic>=2.10.6",
+"python-dotenv>=1.0.1",
+"python-slugify>=8.0.4",
+"sqladmin-litestar-plugin>=0.2.0",
+"structlog>=25.1.0",
+"taskiq>=0.11.14",
+"uuid6>=2024.7.10",
+```
+
 ## About
 
 ### Authentication
@@ -215,4 +238,5 @@ The session mechanism is used as the main method (+ fixation), more about the re
 
 1. [Session Management Cheat Sheet / cheatsheetseries.owasp.org](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
 2. [Python monorepo: an example / tweag.io](https://www.tweag.io/blog/2023-04-04-python-monorepo-1/)
-3. []()
+3. [Microservice chassis / microservices.io](https://microservices.io/patterns/microservice-chassis.html)
+4. []()

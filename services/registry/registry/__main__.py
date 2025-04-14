@@ -10,7 +10,6 @@ def run_cli() -> None:
     print(f"\tPackage: {package_name}")
     print(f"\tUV_PROJECT: {os.getenv('UV_PROJECT')}")
 
-    sys.path.append(str(workdir_path))
     os.environ.setdefault("LITESTAR_APP", f"{package_name}.asgi:create_app")
 
     try:

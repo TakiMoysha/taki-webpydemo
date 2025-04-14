@@ -10,7 +10,7 @@ class AppSettings:
     DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in ("True", "true"))
     NAME: str = field(default_factory=lambda: os.getenv("APP_NAME", "Demo - Messenger"))
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:9001"))
-    SECRET_KEY: str = field(default_factory=lambda: os.getenv("APP_SECRET_KEY", secrets.token_hex()))
+    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "dont_expose_me"), repr=False)
 
     @property
     def version(self) -> str:

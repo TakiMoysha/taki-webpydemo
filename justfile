@@ -1,8 +1,10 @@
 # ============================================================================== SUPPORT
 set dotenv-load
 
+export I_KNOW_HOW_LAUNCH := "True"
+
 # ============================================================================== DEMO
-# start project
+
 demo:
   docker-compose up --build
 
@@ -13,8 +15,8 @@ demo:
 [working-directory: "services/messenger"]
 dev-messenger *ARGS:
   LITESTAR_DEBUG=True
-  UV_PROJECT="services/messenger"
-  uv run server_messenger run --reload --host 0.0.0.0 --port 8000 --workers 2 --debug {{ ARGS }}
+  UV_PROJECT="services.messenger" # debug
+  uv run server_messenger run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
 
 
 # docs string
@@ -22,8 +24,8 @@ dev-messenger *ARGS:
 [working-directory: "services/registry"]
 dev-registry *ARGS:
   LITESTAR_DEBUG=True
-  UV_PROJECT="services/registry"
-  uv run server_registry run --reload --host 0.0.0.0 --port 8000 --workers 2 --debug {{ ARGS }}
+  UV_PROJECT="services.registry" # debug
+  uv run server_registry run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
 
 
 # docs string
