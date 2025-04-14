@@ -1,7 +1,7 @@
-ARG PYTHON_BUILDER_IMAGE=3.12.8-bullseye
+ARG PYTHON_BASE_IMAGE=3.12.8-bullseye
 
 ## ================================== PYHTON ================================== ##
-FROM python:${PYTHON_BUILDER_IMAGE} AS python-base
+FROM python:${PYTHON_BASE_IMAGE} AS python-base
 ENV PIP_DEFAULT_TIMEOUT=100 \
   PIP_DISABLE_PIP_VERSION_CHECK=1 \
   PIP_NO_CACHE_DIR=1 \

@@ -1,6 +1,11 @@
 # Taki Web PyDemo
 
-Demo project for portfolio.
+## Install
+
+```shell
+uv run sync
+uv run pre-commit install
+```
 
 ## About
 
@@ -32,7 +37,7 @@ The session mechanism is used as the main method (+ fixation), more about the re
   - https://developer.squareup.com/docs/devtools/sandbox/testing
 - [ ] work with litestar repositories
 - [ ] Mediator from wsdk
-- [ ] coverage, 
+- [ ] coverage,
 
 ### Messenger
 
