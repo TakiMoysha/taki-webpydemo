@@ -22,7 +22,7 @@ dev-messenger *ARGS:
 test-messenger target="" *ARGS:
   LITESTAR_DEBUG=True
   UV_PROJECT="services.messenger" # debug
-  uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{ target }}
+  uv run pytest {{ ARGS }} {{ target }}
 
 [group: "registry"]
 [working-directory: "services/registry"]

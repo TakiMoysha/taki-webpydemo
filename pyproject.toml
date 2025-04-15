@@ -22,6 +22,7 @@ test = [
   "coverage",
   "pytest",
   "pytest-asyncio",
+  "pytest-anyio",
   "pytest-xdist",
   "pytest-mock",
   "pytest-cov",

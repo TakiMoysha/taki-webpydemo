@@ -1,4 +1,4 @@
-from collections.abc import Generator, AsyncGenerator
+from collections.abc import AsyncGenerator, Generator
 
 import pytest
 import pytest_asyncio
@@ -7,8 +7,6 @@ from litestar.testing import AsyncTestClient, TestClient, create_async_test_clie
 
 from messenger.asgi import create_app
 from messenger.router.ws import ChatConnectionWs
-
-# pytestmark = pytest.mark.asyncio
 
 
 @pytest_asyncio.fixture
