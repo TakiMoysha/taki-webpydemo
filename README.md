@@ -1,33 +1,47 @@
 # Taki Web PyDemo
 
-## Install
+## Development Environment
+
+Install dependencies and pre-commit (as uv tool or standalone).
 
 ```shell
-uv run sync --all-groups
-uv run pre-commit install
+uv sync --all-groups
+uv tool install pre-commit
+pre-commit install
 ```
 
-**Dependencies**
+### Dependencies
 
-```list
-"advanced-alchemy[uuid]>=0.31.0",
-"argparse>=1.4.0",
-"click>=8.1.8",
-"httptools>=0.6.4",
-"httpx>=0.28.1",
-"jsonschema>=4.23.0",
-"litestar-saq>=0.5.0",
-"litestar-users>=1.6.1",
-"litestar-vite[nodeenv]>=0.13.0",
-"litestar[jinja,jwt,redis,structlog]>=2.14.0",
-"orjson>=3.10.15",
-"pydantic>=2.10.6",
-"python-dotenv>=1.0.1",
-"python-slugify>=8.0.4",
-"sqladmin-litestar-plugin>=0.2.0",
-"structlog>=25.1.0",
-"taskiq>=0.11.14",
-"uuid6>=2024.7.10",
+**Potential Dependencies**
+
+```toml
+potential_dependencies = [
+  "advanced-alchemy[uuid]>=0.31.0",
+  "argparse>=1.4.0",
+  "click>=8.1.8",
+  "httptools>=0.6.4",
+  "httpx>=0.28.1",
+  "jsonschema>=4.23.0",
+  "litestar-saq>=0.5.0",
+  "litestar-users>=1.6.1",
+  "litestar-vite[nodeenv]>=0.13.0",
+  "litestar[jinja,jwt,redis,structlog]>=2.14.0",
+  "orjson>=3.10.15",
+  "pydantic>=2.10.6",
+  "python-dotenv>=1.0.1",
+  "python-slugify>=8.0.4",
+  "sqladmin-litestar-plugin>=0.2.0",
+  "structlog>=25.1.0",
+  "taskiq>=0.11.14",
+  "uuid6>=2024.7.10",
+]
+```
+
+**Install deps**
+
+```bash
+uv add deps_name # workspace-level deps
+uv add --project=service/messenger deps_name # project-level deps
 ```
 
 ## About

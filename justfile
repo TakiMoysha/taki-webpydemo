@@ -10,7 +10,6 @@ demo:
 
 # ============================================================================== WIP
 
-# docs string
 [group: "messenger"]
 [working-directory: "services/messenger"]
 dev-messenger *ARGS:
@@ -23,9 +22,8 @@ dev-messenger *ARGS:
 test-messenger target="" *ARGS:
   LITESTAR_DEBUG=True
   UV_PROJECT="services.messenger" # debug
-  uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
+  uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{ target }}
 
-# docs string
 [group: "registry"]
 [working-directory: "services/registry"]
 dev-registry *ARGS:
@@ -34,12 +32,14 @@ dev-registry *ARGS:
   uv run server_registry run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
 
 
-# docs string
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]
 test-wsdk target="" *ARGS:
   uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
 
+
+#report-coverage:
+#  uv run coverage report --fail-under=100 --show-missing -m
 
 # ============================================================================== WIP
 # default_env := "stage"

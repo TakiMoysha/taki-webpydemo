@@ -5,14 +5,14 @@ services:
   #   - MONGODB_INITDB_ROOT_USERNAME=
   #   - MONGODB_INITDB_ROOT_PASSWORD=
   # volumes:
-  #   - db-volume:/data/db
+  #   - database-volume:/data/db
 
   # postgres:
   #   image: postgres
   #   restart: always
   #   hostname: db
   #   volumes:
-  #     - db-volume:/var/lib/postgresql/data
+  #     - database-volume:/var/lib/postgresql/data
   #   ports:
   #     - 15432:5432
   #   environment:
@@ -78,26 +78,26 @@ services:
   #   ports:
   #     - "8025:8025"
 
-  demoapp:
-    build:
-      context: .
-      dockerfile: deploy/docker/demoapp.dockerfile
-    image: takimoysha/pywebdemo_app:latest
-    restart: always
-    depends_on:
-      postgres:
-        condition: service_healthy
-      cache:
-        condition: service_healthy
-    volumes:
-      - .:/app
-    ports:
-      - 8080:8080
-    environment:
-      VITE_USE_SERVER_LIFESPAN: "false" # true if ssr or separate service
-      SAQ_USE_SERVER_LIFESPAN: "false"
-    env_file:
-      - .env.docker
+  # demoapp:
+  #   build:
+  #     context: .
+  #     dockerfile: deploy/docker/demoapp.dockerfile
+  #   image: takimoysha/pywebdemo_app:latest
+  #   restart: always
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     cache:
+  #       condition: service_healthy
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     VITE_USE_SERVER_LIFESPAN: "false" # true if ssr or separate service
+  #     SAQ_USE_SERVER_LIFESPAN: "false"
+  #   env_file:
+  #     - .env.docker
 
   # worker:
   #   image: takimoysha/app:latest
@@ -140,5 +140,5 @@ networks:
         - subnet: 172.17.1.0/29 # 172.17.1.1 - 172.20.1.6
 
 volumes:
-  db-volume: {}
-  ch-volume: {}
+  database-volume: {}
+  cache-volume: {}
