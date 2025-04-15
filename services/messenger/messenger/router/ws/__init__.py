@@ -1,12 +1,11 @@
-import time
 import asyncio
+import time
 from collections.abc import AsyncGenerator
 from dataclasses import dataclass
 from typing import override
 
 from litestar import Litestar, WebSocket, websocket, websocket_listener
 from litestar.handlers import WebsocketListener, send_websocket_stream
-
 
 # @dataclass
 # class Message:
@@ -15,7 +14,7 @@ from litestar.handlers import WebsocketListener, send_websocket_stream
 #     sender: str
 
 
-@websocket(path="/v1/chat/{chat_id:int}")
+@websocket(path="/v1/chat/{chat_id:str}")
 async def chat_handler(socket: WebSocket) -> None:
     await socket.accept()
     is_working = True
@@ -34,7 +33,7 @@ async def chat_handler(socket: WebSocket) -> None:
         print("receive ended")
 
     async with asyncio.TaskGroup() as tg:
-        tg.create_task(send_websocket_stream(socket, stream=handle_stream()))
+        # tg.create_task(send_websocket_stream(socket, stream=handle_stream())) # https://github.com/litestar-org/litestar/issues/4106
         tg.create_task(handle_receive())
 
 

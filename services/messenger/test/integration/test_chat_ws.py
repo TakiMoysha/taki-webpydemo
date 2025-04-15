@@ -13,15 +13,14 @@ from messenger.router.ws import ChatConnectionWs
 pytestmark = pytest.mark.asyncio
 
 
+@pytest.mark.timeout(1)
 async def test_websocket(client: AsyncTestClient) -> None:
+    test_msg = {"hello": "world"}
     ws = await client.websocket_connect("/ws/v1/chat/100")
-    _ = ws.send_json({"hello": "world"})
-    r = ws.receive()
-    print(r)
-    # data = ws.receive_json()
-    # ws.close()
-    # print(data)
-    # assert data == {"message": {"hello": "world"}}
+    ws.send_json(test_msg)
+    data = ws.receive_json()
+    ws.close()
+    assert data == {"message": test_msg}
 
 
 # @mock.patch("messenger.router.ws.chat_generator") # overwrite function with custom returned data
