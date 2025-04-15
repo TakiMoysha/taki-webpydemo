@@ -21,7 +21,7 @@ class Message:
     sender: str
 
 
-@websocket(path="/v1/chat/{chat_id:str}")
+@websocket(path="/v1/chats/{chat_id:str}")
 async def chat_handler(socket: WebSocket) -> None:
     await socket.accept()
 
@@ -49,15 +49,21 @@ async def chat_handler(socket: WebSocket) -> None:
         await is_streaming.set()
 
 
-class ChatConnectionWs(WebsocketListener):
-    path = "/v2/chat/{chat_id:int}"
+# connection & disconnection processing
+# write and read messages
+# msg status processing
+class ChatService:
+    def __init__(self) -> None:
+        pass
 
-    # @override
-    # async def on_accept(self, chat_id: int, socket: WebSocket) -> None:
-    #     await socket.accept(headers={"X-Chat-Header": str(chat_id)})
+    def new_member(self, socket: WebSocket) -> None:
+        pass
 
-    @override
-    # async def on_receive(self, data: str) -> AsyncGenerator[Message, None]:
-    async def on_receive(self, data: str) -> str:
-        print("conn: ", self._owner, data)
-        return data
+    def leave_member(self, socket: WebSocket) -> None:
+        pass
+
+    def receive_msg(self, msg: Message) -> None:
+        pass
+
+    def new_msg(self, msg: Message) -> None:
+        pass

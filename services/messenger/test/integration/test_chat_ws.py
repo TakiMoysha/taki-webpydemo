@@ -20,7 +20,7 @@ pytestmark = pytest.mark.asyncio
 @pytest.mark.timeout(5)
 async def test_deplex_chat_connection(client: AsyncTestClient) -> None:
     test_msg = {"hello": "world"}
-    ws = await client.websocket_connect("/ws/v1/chat/100")
+    ws = await client.websocket_connect("/ws/v1/chats/100")
     ws.send_json(test_msg)
     data = ws.receive_json()
     ws.close()
