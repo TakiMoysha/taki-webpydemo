@@ -8,7 +8,7 @@ from litestar.plugins.sqlalchemy import (
 from litestar.plugins.structlog import StructlogConfig
 import structlog
 
-from .base import get_settings
+from .app import get_settings
 
 settings = get_settings()
 

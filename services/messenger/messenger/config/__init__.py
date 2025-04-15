@@ -1,4 +1,4 @@
-from . import get_settings
+from .app import get_settings
 from .plugins import log_config
 
 __all__ = [
