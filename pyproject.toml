@@ -1,8 +1,8 @@
+[tool.uv]
+default-groups = ["dev", "docs", "linting", "test"]
+
 [dependency-groups]
-dev = [
-    "pytest>=8.3.5",
-    "aiosqlite>=0.21.0"
-]
+dev = ["pytest>=8.3.5", "aiosqlite>=0.21.0"]
 docs = ["git-cliff>=2.7.0"]
 linting = [
   "pre-commit>=3.4.0",
@@ -17,23 +17,26 @@ linting = [
   "asyncpg-stubs",
 ]
 test = [
+  "hypothesis>=6.130.2",
+  "httpx>=0.28.1",
+  "coverage",
   "pytest",
   "pytest-asyncio",
   "pytest-xdist",
   "pytest-mock",
   "pytest-cov",
-  "coverage",
   "pytest-sugar",
+  "pytest-sqlalchemy>=0.2.1",
   "pytest-databases[redis]>=0.1.0",
-  "hypothesis>=6.130.2",
-  "httpx>=0.28.1",
+  "pytest-timeout>=2.3.1",
 ]
 
 [tool.uv.workspace]
 members = ["libs/*", "services/*"]
 
 [tool.pytest.ini_options]
-testpaths = ["test"]
+timeout = 60
+testpaths = ["**/test"]
 addopts = ["-ra", "--ignore", "migrations"]
 filterwarnings = [
   "ignore::DeprecationWarning:pkg_resources",
@@ -180,4 +183,3 @@ body = """
 footer = """
 <!-- Demo Changelog -->
 """
-
