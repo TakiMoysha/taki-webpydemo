@@ -43,6 +43,7 @@ test = [
     { name = "pytest-sugar" },
     { name = "pytest-timeout", specifier = ">=2.3.1" },
     { name = "pytest-xdist" },
+    { name = "tabulate", specifier = ">=0.9.0" },
 ]
 
 [[package]]
