@@ -43,7 +43,7 @@ async def chat_handler(socket: WebSocket) -> None:
         await is_streaming.set()
 
     async with asyncio.TaskGroup() as tg:
-        # tg.create_task(send_websocket_stream(socket, stream=handle_stream())) # https://github.com/litestar-org/litestar/issues/4106
+        tg.create_task(send_websocket_stream(socket, stream=handle_stream()))
         # tg.create_task(handle_stream())
         # tg.create_task(handle_receive())
         await is_streaming.set()

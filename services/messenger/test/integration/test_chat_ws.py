@@ -10,8 +10,6 @@ from litestar.serialization import decode_json
 from litestar.testing import AsyncTestClient, TestClient, create_async_test_client, create_test_client
 from msgspec import json
 
-from messenger.router.ws import ChatConnectionWs
-
 pytestmark = pytest.mark.asyncio
 
 

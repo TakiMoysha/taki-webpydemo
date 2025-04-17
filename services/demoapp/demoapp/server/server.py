@@ -22,9 +22,7 @@ class ServerPlugin(InitPluginProtocol, CLIPluginProtocol):
     @override
     def on_cli_init(self, cli: Group) -> None:
         from demoapp.cli.commands import (
-            check_server,
-            generate_env_file,
-            generate_secret_key,
+            show_database_schema,
         )
         from demoapp.config import get_settings
 
@@ -33,9 +31,7 @@ class ServerPlugin(InitPluginProtocol, CLIPluginProtocol):
         self.version = settings.app.version
         self.redis = settings.cache.get_client()
 
-        cli.add_command(generate_secret_key(32))
-        cli.add_command(generate_env_file(settings))
-        cli.add_command(check_server(settings))
+        cli.add_command(show_database_schema)
 
     @override
     def on_app_init(self, app_config: AppConfig) -> AppConfig:

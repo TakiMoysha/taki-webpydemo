@@ -6,7 +6,6 @@ from litestar.middleware.session.server_side import ServerSideSessionConfig
 from litestar.testing import AsyncTestClient, TestClient, create_async_test_client
 
 from messenger.asgi import create_app
-from messenger.router.ws import ChatConnectionWs
 
 
 @pytest_asyncio.fixture

@@ -1,3 +1,4 @@
+from advanced_alchemy.base import BigIntAuditBase
 from advanced_alchemy.mixins import AuditColumns
 from sqlalchemy import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
@@ -14,10 +15,9 @@ __all__ = [
 ]
 
 
-class User(BaseModel, AuditColumns):
+class User(BaseModel, BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_users"
 
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String, unique=True, index=True, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     password_hash = Column(String, nullable=False)
@@ -25,21 +25,19 @@ class User(BaseModel, AuditColumns):
     chats = relationship("ChatMember", back_populates="user")
 
 
-class Chat(BaseModel, AuditColumns):
+class Chat(BaseModel, BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_chats"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     kind = Column(Enum("private", "group", name="chat_kind"), nullable=False)
 
     members = relationship("ChatMember", back_populates="chat")
 
 
-class ChatMember(BaseModel, AuditColumns):
+class ChatMember(BaseModel, BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_chat_member"
     __table_args__ = (UniqueConstraint("chat_id", "user_id"),)
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
     chat_id = Column(ForeignKey("msg_chats.id"), nullable=False)
     user_id = Column(ForeignKey("msg_users.id"), nullable=False)
     role = Column(Enum("admin", "member", name="chat_member_role"), nullable=False)
@@ -48,10 +46,9 @@ class ChatMember(BaseModel, AuditColumns):
     user = relationship("User", back_populates="chats")
 
 
-class Group(BaseModel, AuditColumns):
+class Group(BaseModel, BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_groups"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, index=True, unique=True, nullable=False)
     creator_id = Column(ForeignKey("msg_chat_member.id"), nullable=False)
 
@@ -59,10 +56,9 @@ class Group(BaseModel, AuditColumns):
     members = relationship("ChatMember", back_populates="group")
 
 
-class Message(BaseModel):
+class Message(BaseModel, BigIntAuditBase):
     __tablename__ = "msg_messages"
 
-    id = Column(Integer, primary_key=True, index=True)
     chat_id = Column(ForeignKey("msg_chats.id"), nullable=False)
     sender_id = Column(ForeignKey("msg_users.id"), nullable=False)
     text = Column(Text, nullable=False)
