@@ -6,6 +6,7 @@ from litestar.openapi.spec.security_scheme import SecurityScheme
 from messenger.config import get_settings
 
 settings = get_settings()
+
 config = OpenAPIConfig(
     title=settings.app.NAME,
     version=settings.app.version,

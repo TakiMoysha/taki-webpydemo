@@ -1,4 +1,10 @@
-from litestar.logging.config import LoggingConfig, StructLoggingConfig
+import sys
+from litestar.logging.config import (
+    LoggingConfig,
+    StructLoggingConfig,
+    default_structlog_processors,
+    default_structlog_standard_lib_processors,
+)
 from litestar.middleware.logging import LoggingMiddlewareConfig
 from litestar.plugins.sqlalchemy import (
     AlembicAsyncConfig,
@@ -6,6 +12,7 @@ from litestar.plugins.sqlalchemy import (
     SQLAlchemyAsyncConfig,
 )
 from litestar.plugins.structlog import StructlogConfig
+import structlog
 
 from .app import get_settings
 
@@ -29,31 +36,54 @@ structlog_config = StructlogConfig(
     enable_middleware_logging=True,
     structlog_logging_config=StructLoggingConfig(
         log_exceptions="always",
+        wrapper_class=structlog.make_filtering_bound_logger(settings.logging.LEVEL),
         standard_lib_logging_config=LoggingConfig(
             root={
                 "level": settings.logging.LEVEL,
                 "handlers": ["queue_listener"],
             },
+            formatters={
+                "standard": {
+                    "()": structlog.stdlib.ProcessorFormatter,
+                    "processors": [
+                        structlog.processors.add_log_level,
+                        structlog.processors.JSONRenderer(),
+                        structlog.processors.dict_tracebacks,
+                        # structlog.processors.StackInfoRenderer(),
+                        # structlog.dev.set_exc_info,
+                        # structlog.processors.format_exc_info,
+                        # structlog.processors.MaybeTimeStamper(fmt="%Y-%m-%d %H:%M"),
+                        # structlog.processors.ExceptionPrettyPrinter(),
+                        # structlog.dev.ConsoleRenderer(),
+                        # structlog.processors.TimeStamper(fmt="unix"),
+                        # default_structlog_processors(),
+                    ],
+                }
+            },
             loggers={
                 "uvicorn.access": {
                     "propagate": False,
-                    "level": settings.logging.UVICORN_ACCESS_LEVEL,
+                    # "level": settings.logging.UVICORN_ACCESS_LEVEL,
+                    "level": "ERROR",
                     "handlers": ["queue_listener"],
                 },
                 "uvicorn.error": {
                     "propagate": False,
-                    "level": settings.logging.UVICORN_ERROR_LEVEL,
+                    # "level": settings.logging.UVICORN_ERROR_LEVEL,
+                    "level": "ERROR",
                     "handlers": ["queue_listener"],
                 },
                 # },
                 "sqlalchemy.engine": {
                     "propagate": False,
-                    "level": settings.logging.SQLALCHEMY_LEVEL,
+                    # "level": settings.logging.SQLALCHEMY_LEVEL,
+                    "level": "ERROR",
                     "handlers": ["queue_listener"],
                 },
                 "sqlalchemy.pool": {
                     "propagate": False,
-                    "level": settings.logging.SQLALCHEMY_LEVEL,
+                    # "level": settings.logging.SQLALCHEMY_LEVEL,
+                    "level": "ERROR",
                     "handlers": ["queue_listener"],
                 },
             },

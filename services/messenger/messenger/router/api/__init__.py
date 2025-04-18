@@ -6,15 +6,24 @@ from litestar.openapi.spec import Example
 from litestar.params import Body
 
 from messenger.database.models import Message
+from messenger.lib.logger import get_logger
 
 NewChatRequestExample = Example(
     summary="Create new chat",
     value='{"name": "Example Chat", "members": ["user@example.com", "user@example.com"]}',
 )
 
+logger = get_logger(__name__)
+
 
 @get("/health")
 async def health_check() -> dict:
+    logger.warning("test msg", obj={"status": "ok"})
+    try:
+        raise ValueError("real exception")
+    except ValueError as err:
+        logger.error("test msg", obj={"status": "ok"}, exc_info="fake exception")
+
     return {"status": "ok"}
 
 

@@ -83,7 +83,7 @@ class DatabaseSettings:
                 echo=self.ECHO,
                 echo_pool=self.ECHO_POOL,
                 pool_use_lifo=True,
-            )  # See [`async_sessionmaker()`][sqlalchemy.ext.asyncio.async_sessionmaker].
+            )
             set_postgres_hooks(engine)
         elif self.URL.startswith("sqlite+aiosqlite"):
             engine = create_async_engine(
@@ -92,7 +92,8 @@ class DatabaseSettings:
                 json_serializer=encode_json,
                 json_deserializer=decode_json,
                 echo=self.ECHO,
-            )  # [`async_sessionmaker()`][sqlalchemy.ext.asyncio.async_sessionmaker]
+                echo_pool=self.ECHO_POOL,
+            )
             set_sqlite_hooks(engine)
         else:
             engine = create_async_engine(
@@ -101,6 +102,7 @@ class DatabaseSettings:
                 json_serializer=encode_json,
                 json_deserializer=decode_json,
                 echo=self.ECHO,
+                echo_pool=self.ECHO_POOL,
             )
 
         self._engine_instance = engine
