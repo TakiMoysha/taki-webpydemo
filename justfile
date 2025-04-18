@@ -1,15 +1,21 @@
 # ============================================================================== SUPPORT
 set dotenv-load
 
-export I_KNOW_HOW_LAUNCH := "True"
+export DEV_LAUNCH := "True"
 
+# example: just init-alchemy services/messenger
+[group: "support"]
+init-alchemy project:
+  uv --project={{ project }} run alchemy
 # ============================================================================== DEMO
 
 demo:
   docker-compose up --build
 
-# ============================================================================== WIP
+# ============================================================================== services
 
+# --------------------------------------------------------------------- messenger
+# example: just dev-messenger
 [group: "messenger"]
 [working-directory: "services/messenger"]
 dev-messenger *ARGS:
@@ -17,6 +23,7 @@ dev-messenger *ARGS:
   UV_PROJECT="services.messenger" # debug
   uv run server_messenger run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
 
+# example: just test-messenger
 [group: "messenger"]
 [working-directory: "services/messenger"]
 test-messenger target="" *ARGS:
@@ -24,6 +31,15 @@ test-messenger target="" *ARGS:
   UV_PROJECT="services.messenger" # debug
   uv run pytest --sqlalchemy-connect-url=sqlite:///tmp/test.sqllite3 {{ ARGS }} {{ target }}
 
+# example: just messenger run
+[group: "messenger"]
+[working-directory: "services/messenger"]
+messenger *ARGS:
+  LITESTAR_DEBUG=True
+  UV_PROJECT="services.messenger" # debug
+  uv run server_messenger {{ ARGS }}
+
+# --------------------------------------------------------------------- registry
 [group: "registry"]
 [working-directory: "services/registry"]
 dev-registry *ARGS:
@@ -32,10 +48,12 @@ dev-registry *ARGS:
   uv run server_registry run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
 
 
+# ============================================================================== packages
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]
 test-wsdk target="" *ARGS:
   uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
+
 
 
 #report-coverage:

@@ -1,21 +1,36 @@
+import asyncio
+
 import click
 from litestar import Litestar
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, inspect
 from tabulate import tabulate
 
-from messenger.lib.database import BaseModel
+from messenger.config.app import Settings
+from messenger.lib.logger import get_logger
+
+logger = get_logger(__name__)
 
 
-@click.command()
-def show_database_schema(app: Litestar) -> None:
-    BaseModel.metadata.create_all(app.settingsengine)
+def show_database_schema(settings: Settings) -> click.Command:
+    async def _inspect_db():
+        meta = MetaData()
+        engine = settings.db.get_engine()
+        async with engine.sync_engine.connect() as conn:
+            values = await conn.run_sync(
+                lambda sync_conn: inspect(sync_conn).get_table_names(),
+            )
 
-    m = MetaData()
-    m.reflect(engine)
+        return values
 
-    rable_format = tabulate(
-        [(table.name, [c.name for c in table.columns]) for table in m.tables.values()],
-        headers=["Table", "Columns"],
-    )
+    @click.command(name="show-database-schema")
+    def _show_db_schema(app: Litestar) -> None:
+        values = asyncio.run(_inspect_db())
+        click.echo(f"values: {values}")
 
-    print("Database schema:\n", rable_format)
+        # table_format = tabulate(
+        #     [(table.name, [c.name for c in table.columns]) for table in values],
+        #     headers=["Table", "Columns"],
+        # )
+        # click.echo(f"Database schema:\n {table_format}")
+
+    return _show_db_schema

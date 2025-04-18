@@ -6,26 +6,26 @@ from litestar.plugins.sqlalchemy import (
     SQLAlchemyAsyncConfig,
 )
 from litestar.plugins.structlog import StructlogConfig
-import structlog
 
 from .app import get_settings
 
 settings = get_settings()
 
-# !TODO: write alchemy_config
-# alchemy_config = SQLAlchemyAsyncConfig(
-#     engine_instance=settings.db.get_engine(),
-#     before_send_handler="autocommit",
-#     session_config=AsyncSessionConfig(expire_on_commit=False),
-#     alembic_config=AlembicAsyncConfig(
-#         version_table_name=settings.db.MIGRATION_VERSION_TABLE,
-#         script_config=settings.db.MIGRATION_CONFIG,
-#         script_location=settings.db.MIGRATION_PATH,
-#     ),
-# )
+
+alchemy_config = SQLAlchemyAsyncConfig(
+    engine_instance=settings.db.get_engine(),
+    create_all=True,
+    before_send_handler="autocommit",
+    session_config=AsyncSessionConfig(expire_on_commit=False),
+    alembic_config=AlembicAsyncConfig(
+        version_table_name=settings.db.MIGRATION_VERSION_TABLE,
+        script_config=settings.db.MIGRATION_CONFIG,
+        script_location=settings.db.MIGRATION_PATH,
+    ),
+)
 
 
-log_config = StructlogConfig(
+structlog_config = StructlogConfig(
     enable_middleware_logging=True,
     structlog_logging_config=StructLoggingConfig(
         log_exceptions="always",

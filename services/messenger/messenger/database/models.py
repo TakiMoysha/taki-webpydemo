@@ -2,9 +2,7 @@ from advanced_alchemy.base import BigIntAuditBase
 from advanced_alchemy.mixins import AuditColumns
 from sqlalchemy import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import Boolean, DateTime, Enum, Integer, String, Text
-
-from messenger.lib.database import BaseModel
+from sqlalchemy.types import Boolean, DateTime, Enum, String, Text
 
 __all__ = [
     "Chat",
@@ -15,7 +13,7 @@ __all__ = [
 ]
 
 
-class User(BaseModel, BigIntAuditBase, AuditColumns):
+class User(BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_users"
 
     name = Column(String, unique=True, index=True, nullable=False)
@@ -25,7 +23,7 @@ class User(BaseModel, BigIntAuditBase, AuditColumns):
     chats = relationship("ChatMember", back_populates="user")
 
 
-class Chat(BaseModel, BigIntAuditBase, AuditColumns):
+class Chat(BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_chats"
 
     name = Column(String, nullable=False)
@@ -34,7 +32,7 @@ class Chat(BaseModel, BigIntAuditBase, AuditColumns):
     members = relationship("ChatMember", back_populates="chat")
 
 
-class ChatMember(BaseModel, BigIntAuditBase, AuditColumns):
+class ChatMember(BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_chat_member"
     __table_args__ = (UniqueConstraint("chat_id", "user_id"),)
 
@@ -46,7 +44,7 @@ class ChatMember(BaseModel, BigIntAuditBase, AuditColumns):
     user = relationship("User", back_populates="chats")
 
 
-class Group(BaseModel, BigIntAuditBase, AuditColumns):
+class Group(BigIntAuditBase, AuditColumns):
     __tablename__ = "msg_groups"
 
     name = Column(String, index=True, unique=True, nullable=False)
@@ -56,7 +54,7 @@ class Group(BaseModel, BigIntAuditBase, AuditColumns):
     members = relationship("ChatMember", back_populates="group")
 
 
-class Message(BaseModel, BigIntAuditBase):
+class Message(BigIntAuditBase):
     __tablename__ = "msg_messages"
 
     chat_id = Column(ForeignKey("msg_chats.id"), nullable=False)

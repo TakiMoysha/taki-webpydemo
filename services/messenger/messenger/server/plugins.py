@@ -1,10 +1,12 @@
-from litestar.plugins.sqlalchemy import SQLAlchemyAsyncConfig, SQLAlchemyPlugin
+from litestar.plugins.sqlalchemy import SQLAlchemyPlugin
+from litestar.plugins.structlog import StructlogPlugin
 from litestar.security.jwt import JWTAuth
 
 from messenger.auth import AuthJWTToken, UserFromToken
 from messenger.config import get_settings
-from messenger.lib.database import BaseModel
+from messenger.config.plugins import alchemy_config, structlog_config
 from messenger.server.dependencies import retrieve_user_handler
+from messenger.server.server import ServerPlugin
 
 settings = get_settings()
 
@@ -14,11 +16,10 @@ jwt_auth = JWTAuth[UserFromToken](
     token_cls=AuthJWTToken,
 )
 
+structlog_plugin = StructlogPlugin(config=structlog_config)
 
-alchemy_plugin = SQLAlchemyPlugin(
-    config=SQLAlchemyAsyncConfig(connection_string=settings.db.URL, create_all=True, metadata=BaseModel.metadata)
-)
+alchemy_plugin = SQLAlchemyPlugin(config=alchemy_config)
 
 
-def get_plugins() -> tuple[SQLAlchemyPlugin, ...]:
-    return (alchemy_plugin,)
+def get_plugins() -> tuple:
+    return (structlog_plugin, alchemy_plugin, ServerPlugin())

@@ -31,8 +31,6 @@ class ServerPlugin(InitPluginProtocol, CLIPluginProtocol):
         self.version = settings.app.version
         self.redis = settings.cache.get_client()
 
-        cli.add_command(show_database_schema)
-
     @override
     def on_app_init(self, app_config: AppConfig) -> AppConfig:
         return super().on_app_init(app_config)

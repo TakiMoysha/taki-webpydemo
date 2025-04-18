@@ -3,14 +3,14 @@ from typing import Literal
 
 
 # ===================== BASE DTO
-@dataclass
+@dataclass(slots=True)
 class AuditDTO:
     created_at: float
     updated_at: float
 
 
 # ===================== Full DTO
-@dataclass
+@dataclass(slots=True)
 class FullUserDTO(AuditDTO):
     id: int
     name: str
@@ -18,14 +18,14 @@ class FullUserDTO(AuditDTO):
     password_hash: str
 
 
-@dataclass
+@dataclass(slots=True)
 class FullChatDTO(AuditDTO):
     id: int
     name: str
     kind: Literal["group", "private"]
 
 
-@dataclass
+@dataclass(slots=True)
 class FullChatMemberDTO(AuditDTO):
     id: int
     chat_id: int
@@ -33,14 +33,14 @@ class FullChatMemberDTO(AuditDTO):
     role: Literal["admin", "member"]
 
 
-@dataclass
+@dataclass(slots=True)
 class FullGroupDTO(AuditDTO):
     id: int
     name: str
     creator_id: int
 
 
-@dataclass
+@dataclass(slots=True)
 class FullMessageDTO(AuditDTO):
     id: int
     chat_id: int
@@ -51,7 +51,7 @@ class FullMessageDTO(AuditDTO):
 
 
 # ===================== ReadOnly DTO
-@dataclass(frozen=True)
+@dataclass(slots=True, frozen=True)
 class ReadOnlyUserDTO:
     id: int
     name: str
