@@ -28,10 +28,15 @@ async def chat_handler(socket: WebSocket) -> None:
     is_streaming = anyio.Event()
     await is_streaming.set()
 
-    async def handle_stream() -> None:
+    async def stream_current_time() -> AsyncGenerator[str, None]:
+        while True:
+            yield str(time.time())
+            await asyncio.sleep(0.5)
+
+    async def handle_stream() -> AsyncGenerator[str, None]:
         while is_streaming.is_set():
             msg = Message(content=str(is_streaming.statistics()), timestamp=time.time(), sender="takimoysha")
-            await socket.send_json(msg)
+            yield str(msg)
 
         await socket.close()
 
@@ -44,8 +49,7 @@ async def chat_handler(socket: WebSocket) -> None:
 
     async with asyncio.TaskGroup() as tg:
         tg.create_task(send_websocket_stream(socket, stream=handle_stream()))
-        # tg.create_task(handle_stream())
-        # tg.create_task(handle_receive())
+        tg.create_task(handle_receive())
         await is_streaming.set()
 
 
