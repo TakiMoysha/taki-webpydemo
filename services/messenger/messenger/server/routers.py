@@ -1,6 +1,5 @@
 from litestar import get
 from litestar.response import File
-from litestar.types import ControllerRouterHandler
 
 from messenger.router import api_router, ws_router
 
@@ -10,4 +9,5 @@ def stub_favicon() -> File:
     return File("static/favicon.ico")
 
 
-root_router: tuple[ControllerRouterHandler, ...] = (stub_favicon, api_router, ws_router)
+def get_handlers() -> tuple:
+    return (stub_favicon, api_router, ws_router)
