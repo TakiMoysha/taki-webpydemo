@@ -108,6 +108,7 @@ target-version = "py312"
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
+"tooling/scripts/*" = ["S101"]
 "*/migrations/*.py" = ['D104', 'D103', 'D205', 'D212']
 "__init__.py" = ['F401', 'D104']
 "docs/**/*.*" = [

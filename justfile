@@ -3,10 +3,24 @@ set dotenv-load
 
 export DEV_LAUNCH := "True"
 
+defaul_test_db := "sqlite+asyncio:///tmp/test.sqllite3"
+default_alembic_config := "database/migrations/alembic.ini"
+
+
 # example: just init-alchemy services/messenger
 [group: "support"]
 init-alchemy project:
   uv --project={{ project }} run alchemy
+
+# make changelog
+[group: "support"]
+changelog:
+  git cliff -o CHANGELOG.md
+
+# run pre-commit check
+[group: "support"]
+check:
+  uv run pre-commit run --all-files   
 # ============================================================================== DEMO
 
 demo:
@@ -29,7 +43,7 @@ dev-messenger *ARGS:
 test-messenger target="" *ARGS:
   LITESTAR_DEBUG=True
   UV_PROJECT="services.messenger" # debug
-  uv run pytest --sqlalchemy-connect-url=sqlite:///tmp/test.sqllite3 {{ ARGS }} {{ target }}
+  uv run pytest --verbose --capture=no --sqlalchemy-connect-url={{ defaul_test_db }} {{ ARGS }} {{ target }}
 
 # example: just messenger run
 [group: "messenger"]
@@ -40,6 +54,7 @@ messenger *ARGS:
   uv run server_messenger {{ ARGS }}
 
 # --------------------------------------------------------------------- registry
+
 [group: "registry"]
 [working-directory: "services/registry"]
 dev-registry *ARGS:
@@ -49,10 +64,11 @@ dev-registry *ARGS:
 
 
 # ============================================================================== packages
+
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]
 test-wsdk target="" *ARGS:
-  uv run pytest -v -s --log-cli-level=INFO {{ ARGS }} {{target}}
+  uv run pytest --verbose --capture=no --log-cli-level=INFO {{ ARGS }} {{target}}
 
 
 
@@ -60,11 +76,6 @@ test-wsdk target="" *ARGS:
 #  uv run coverage report --fail-under=100 --show-missing -m
 
 # ============================================================================== WIP
-# default_env := "stage"
-# default_app := "demoapp.asgi:create_app"
-# alembic_config := "src/demoapp/db/migrations/alembic.ini"
-# ============================================================================== DEVELOPMENT 
-
 # docker-run:
 #   docker run -it --rm --init --name stage-pywebdemo -p 8000:8000 --cpus=4 pywebdemo_app:latest
 #
@@ -82,29 +93,3 @@ test-wsdk target="" *ARGS:
 #
 # # make-migrations:
 # #   uv run {{default_app}} database make-migrations
-#
-# # ============================================================================== TESTS
-# test target="tests":
-#   uv run pytest -v -s --log-cli-level=INFO {{target}}
-#
-# debug-test target:
-#   uv run pytest -v -s -rP {{target}}
-#
-# check:
-#   uv run pre-commit run --all-files
-#
-# # ============================================================================== DOCS 
-# routes:
-#   uv run litestar --app {{default_app}} routes
-#
-# schema:
-#   uv run litestar --app {{default_app}} schema openapi --output docs/schema.json
-#
-# make-changelog:
-#   git cliff -o CHANGELOG.md
-#
-# make-dependencies:
-#   uv export --format requirements-txt --output-file requirements.txt
-#
-# kill-dev:
-#   ps aux | grep 'granian' | awk '{print $2}' | xargs kill

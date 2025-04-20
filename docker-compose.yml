@@ -1,83 +1,4 @@
 services:
-  # mongo:
-  # image: mongodb/mongodb-community-server
-  # environment:
-  #   - MONGODB_INITDB_ROOT_USERNAME=
-  #   - MONGODB_INITDB_ROOT_PASSWORD=
-  # volumes:
-  #   - database-volume:/data/db
-
-  # postgres:
-  #   image: postgres
-  #   restart: always
-  #   hostname: db
-  #   volumes:
-  #     - database-volume:/var/lib/postgresql/data
-  #   ports:
-  #     - 15432:5432
-  #   environment:
-  #     - PG_USER=devuser
-  #     - PG_PASS=devuser
-  #     - PG_NAME=devdb
-  #   restart: unless-stopped
-  #   logging:
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "3"
-  #     healthcheck:
-  #       test:
-  #         - CMD
-  #         - pg_isready
-  #         - -U
-  #         - demoapp
-  #       interval: 5s
-  #       timeout: 30s
-  #       retries: 5
-
-  # adminer:
-  #   image: adminer
-  #   ports:
-  #     - 8081:8080
-
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   environment:
-  #     - PGADMIN_DEFAULT_EMAIL=
-  #     - PGADMIN_DEFAULT_PASSWORD=
-  #     - PGADMIN_CONFIG_SERVER_MODE='False'
-  #   ports:
-  #     - 8082:80
-
-  # cache:
-  #   image: valkey/valkey:latest
-  #   ports:
-  #     - 16379:6379
-  #   hostname: cache
-  #   command: redis-server --appendonly yes
-  #   volumes:
-  #     - ch-volume:/data
-  #   environment:
-  #     ALLOW_EMPTY_PASSWORD: "yes"
-  #   restart: unless-stopped
-  #   logging:
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "3"
-  #   healthcheck:
-  #     test:
-  #       - CMD
-  #       - redis-cli
-  #       - ping
-  #     interval: 5s
-  #     timeout: 30s
-  #     retries: 5
-
-  # smtp:
-  #   image: mailhog/mailhog:v1.0.0
-  #   container_name: dev-smtp
-  #   ports:
-  #     - "8025:8025"
-
   # demoapp:
   #   build:
   #     context: .
@@ -111,34 +32,82 @@ services:
   #   env_file:
   #     - .env.docker
 
-  # migrator:
-  #   image: takimoysha/app:latest
-  #   restart: "no"
-  #   command: litestar database upgrade --no-prompt
-  #   env_file:
-  #     - .env.docker
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #     cache:
-  #       condition: service_healthy
+  postgres.private:
+    image: postgres
+    restart: unless-stopped
+    hostname: db.private
+    # networks:
+    # - private.net
+    volumes:
+      - database.volume:/var/lib/postgresql/data
+    ports:
+      - 15432:5432
+    environment:
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=devuser
+      - POSTGRES_DB=devdb
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test:
+        - CMD
+        - pg_isready
+        - -U
+        - demoapp
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
+  redis-like.private:
+    image: valkey/valkey:latest
+    hostname: cache.private
+    ports:
+      - 16379:6379
+    command: redis-server --appendonly yes
+    # networks:
+    #   - private.net
+    volumes:
+      - cache.volume:/data
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
+  # smtp:
+  #   image: mailhog/mailhog:v1.0.0
+  #   container_name: dev-smtp
+  #   ports:
+  #     - "8025:8025"
 
 networks:
   ## connection from swag to services
-  gateway:
-    name: gateway
+  gateway.net:
+    name: gateway.net
     ipam:
       config:
         - subnet: 172.17.0.0/24 # 172.17.0.1 - 172.17.0.254
 
   ## connection from services to internal services like db, cache, other services
-  private:
-    name: private
+  private.net:
+    name: private.net
     internal: true
     ipam:
       config:
         - subnet: 172.17.1.0/29 # 172.17.1.1 - 172.20.1.6
 
 volumes:
-  database-volume: {}
-  cache-volume: {}
+  database.volume: {}
+  cache.volume: {}
