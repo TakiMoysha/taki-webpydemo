@@ -32,14 +32,14 @@ services:
   #   env_file:
   #     - .env.docker
 
-  postgres.private:
+  postgres-private:
     image: postgres
     restart: unless-stopped
-    hostname: db.private
+    hostname: db-private
     # networks:
     # - private.net
     volumes:
-      - database.volume:/var/lib/postgresql/data
+      - database-volume:/var/lib/postgresql/data
     ports:
       - 15432:5432
     environment:
@@ -60,16 +60,16 @@ services:
       timeout: 30s
       retries: 5
 
-  redis-like.private:
+  redis-like-private:
     image: valkey/valkey:latest
-    hostname: cache.private
+    hostname: cache-private
     ports:
       - 16379:6379
     command: redis-server --appendonly yes
     # networks:
     #   - private.net
     volumes:
-      - cache.volume:/data
+      - cache-volume:/data
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
     restart: unless-stopped
@@ -94,20 +94,20 @@ services:
 
 networks:
   ## connection from swag to services
-  gateway.net:
-    name: gateway.net
+  gateway-net:
+    name: gateway-net
     ipam:
       config:
         - subnet: 172.17.0.0/24 # 172.17.0.1 - 172.17.0.254
 
   ## connection from services to internal services like db, cache, other services
-  private.net:
-    name: private.net
+  private-net:
+    name: private-net
     internal: true
     ipam:
       config:
         - subnet: 172.17.1.0/29 # 172.17.1.1 - 172.20.1.6
 
 volumes:
-  database.volume: {}
-  cache.volume: {}
+  database-volume: {}
+  cache-volume: {}

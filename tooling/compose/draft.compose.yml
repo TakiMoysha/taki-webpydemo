@@ -1,3 +1,5 @@
+version: "3.9"
+
 demoapp:
   services:
     requests:
@@ -24,3 +26,21 @@ demoapp:
       SECRET_KEY: "dont_expose_me"
       DATABASE: ":memory:"
       SQLALCHEMY_DATABASE: "sqlite+aiosqlite:///:memory:"
+
+networks:
+  - gateway.net:
+      driver: bridge
+
+volumes:
+  - tmp-volume:
+      { driver: local, driver_opts: { o: bind, type: none, device: /tmp } }
+
+configs:
+  - nginx-balancer-conf:
+      file: "./tooling/nginx/balancer-nginx.conf"
+      target: "/etc/nginx/nginx.conf"
+  - draft-app-conf:
+    content: |
+      LITESTAR_DEBUG=True \
+      LITESTAR_SERVER_HOST=0.0.0.0 \
+      LITESTAR_SERVER_PORT=8000
