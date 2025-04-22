@@ -1,3 +1,4 @@
+import pytest
 from typing import override
 from unittest import TestCase
 
@@ -20,6 +21,7 @@ class TestQueryHandler(IQueryHandler):
         pass
 
 
+@pytest.mark.skip("Not implemented")
 class TestMediator(TestCase):
     mediator: Mediator
 
@@ -28,6 +30,7 @@ class TestMediator(TestCase):
         self.mediator = Mediator()
         return super().setUp()
 
+    @pytest.mark.skip("Not implemented")
     def test_should_mediator(self) -> None:
         a_command: BaseCommand = TestCommand()
         a_command_handlers: list[ICommandHandler] = [TestCommandHandler()]

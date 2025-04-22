@@ -38,7 +38,7 @@ members = ["libs/*", "services/*"]
 
 [tool.pytest.ini_options]
 timeout = 60
-testpaths = ["**/test"]
+testpaths = ["**/tests"]
 addopts = ["-ra", "--ignore", "migrations"]
 filterwarnings = [
   "ignore::DeprecationWarning:pkg_resources",
@@ -56,6 +56,9 @@ fix = true
 line-length = 120
 lint.fixable = ["ALL"]
 lint.ignore = [
+  "I001",    # isort - unsorted imports
+  "F401",    # pylint - unused import
+  "ERA001",  # ruff - commented out code
   "E501",    # pycodestyle line too long, handled by black
   "D100",    # pydocstyle - missing docstring in public module
   "D101",    # pydocstyle - missing docstring in public class
@@ -128,7 +131,7 @@ convention = "google"
 "docs/conf.py" = ["FIX002", "ARG001", "INP001"]
 "scripts/*.py" = ["INP001", "ERA001"]
 "scripts/**/*.*" = ["D", "ARG", "EM", "TRY", "G", "FBT", "INP001"]
-"tests/*.py" = ['D103', 'S101', 'D104']
+"**/tests/*.py" = ['D103', 'S101', 'D104']
 
 [tool.slotscheck]
 # treat failed imports as errors
