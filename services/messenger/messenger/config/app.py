@@ -12,16 +12,17 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 
 from messenger.lib.database.hooks import set_postgres_hooks, set_sqlite_hooks
 
-PROJECT_HOME: Final[Path] = module_to_os_path(os.getenv("PROJECT_HOME", "messenger"))
-TRUE_VALUES = ("True", "true")
+from wsdk.config import get_upcast_env
+
+PROJECT_HOME: Final[Path] = module_to_os_path(get_upcast_env("PROJECT_HOME", "messenger"))
 
 
 @dataclass
 class AppSettings:
-    DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in TRUE_VALUES)
-    NAME: str = field(default_factory=lambda: os.getenv("APP_NAME", "Demo - Messenger"))
-    URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:9001"))
-    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "dont_expose_me"), repr=False)
+    DEBUG: bool = field(default_factory=lambda: get_upcast_env("LITESTAR_DEBUG", False))
+    NAME: str = field(default_factory=lambda: get_upcast_env("APP_NAME", "Demo - Messenger"))
+    URL: str = field(default_factory=lambda: get_upcast_env("APP_URL", "http://localhost:9001"))
+    SECRET_KEY: str = field(default_factory=lambda: get_upcast_env("SECRET_KEY", "dont_expose_me"))
 
     @property
     def version(self) -> str:
@@ -48,16 +49,16 @@ class KafkaSettings:
 class DatabaseSettings:
     URL: str = field(default_factory=lambda: os.getenv("DATABASE_URL", "sqlite+aiosqlite:///tmp/messenger.sqlite3"))
 
-    ECHO: bool = field(default_factory=lambda: os.getenv("DATABASE_ECHO", str(False)) in TRUE_VALUES)
-    ECHO_POOL: bool = field(default_factory=lambda: os.getenv("DATABASE_ECHO_POOL", str(False)) in TRUE_VALUES)
+    ECHO: bool = field(default_factory=lambda: get_upcast_env("DATABASE_ECHO", False))
+    ECHO_POOL: bool = field(default_factory=lambda: get_upcast_env("DATABASE_ECHO_POOL", False))
 
-    # POOLING: bool = field(default_factory=lambda: os.getenv("DATABASE_POOLING", "False") in TRUE_VALUES)
-    # POOL_DISABLED: bool = field(default_factory=lambda: os.getenv("DATABASE_POOL_DISABLED", "False") in TRUE_VALUES)
-    # POOL_MAX_OVERFLOW: int = field(default_factory=lambda: int(os.getenv("DATABASE_MAX_POOL_OVERFLOW", "10")))
-    # POOL_SIZE: int = field(default_factory=lambda: int(os.getenv("DATABASE_POOL_SIZE", "5")))
-    # POOL_TIMEOUT: int = field(default_factory=lambda: int(os.getenv("DATABASE_POOL_TIMEOUT", "30")))
-    # POOL_RECYCLE: int = field(default_factory=lambda: int(os.getenv("DATABASE_POOL_RECYCLE", "300")))
-    # POOL_PRE_PING: bool = field(default_factory=lambda: os.getenv("DATABASE_PRE_POOL_PING", "False") in TRUE_VALUES)
+    # POOLING: bool = field(default_factory=lambda: get_upcast_env("DATABASE_POOLING", False))
+    # POOL_DISABLED: bool = field(default_factory=lambda: get_upcast_env("DATABASE_POOL_DISABLED", False))
+    # POOL_MAX_OVERFLOW: int = field(default_factory=lambda: get_upcast_env("DATABASE_MAX_POOL_OVERFLOW", 10))
+    POOL_SIZE: int = field(default_factory=lambda: get_upcast_env("DATABASE_POOL_SIZE", 5))
+    POOL_TIMEOUT: int = field(default_factory=lambda: get_upcast_env("DATABASE_POOL_TIMEOUT", 30))
+    POOL_RECYCLE: int = field(default_factory=lambda: get_upcast_env("DATABASE_POOL_RECYCLE", 300))
+    POOL_PRE_PING: bool = field(default_factory=lambda: get_upcast_env("DATABASE_PRE_POOL_PING", False))
 
     MIGRATION_VERSION_TABLE: str = "alembic_version"
     MIGRATION_PATH: str = f"{PROJECT_HOME}/database/migrations"
