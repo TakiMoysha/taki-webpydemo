@@ -42,48 +42,26 @@ structlog_config = StructlogConfig(
                 "level": settings.logging.LEVEL,
                 "handlers": ["queue_listener"],
             },
-            formatters={
-                "standard": {
-                    "()": structlog.stdlib.ProcessorFormatter,
-                    "processors": [
-                        structlog.processors.add_log_level,
-                        structlog.processors.JSONRenderer(),
-                        structlog.processors.dict_tracebacks,
-                        # structlog.processors.StackInfoRenderer(),
-                        # structlog.dev.set_exc_info,
-                        # structlog.processors.format_exc_info,
-                        # structlog.processors.MaybeTimeStamper(fmt="%Y-%m-%d %H:%M"),
-                        # structlog.processors.ExceptionPrettyPrinter(),
-                        # structlog.dev.ConsoleRenderer(),
-                        # structlog.processors.TimeStamper(fmt="unix"),
-                        # default_structlog_processors(),
-                    ],
-                }
-            },
             loggers={
                 "uvicorn.access": {
                     "propagate": False,
-                    # "level": settings.logging.UVICORN_ACCESS_LEVEL,
-                    "level": "ERROR",
+                    "level": settings.logging.UVICORN_ACCESS_LEVEL,
                     "handlers": ["queue_listener"],
                 },
                 "uvicorn.error": {
                     "propagate": False,
-                    # "level": settings.logging.UVICORN_ERROR_LEVEL,
-                    "level": "ERROR",
+                    "level": settings.logging.UVICORN_ERROR_LEVEL,
                     "handlers": ["queue_listener"],
                 },
                 # },
                 "sqlalchemy.engine": {
                     "propagate": False,
-                    # "level": settings.logging.SQLALCHEMY_LEVEL,
-                    "level": "ERROR",
+                    "level": settings.logging.SQLALCHEMY_LEVEL,
                     "handlers": ["queue_listener"],
                 },
                 "sqlalchemy.pool": {
                     "propagate": False,
-                    # "level": settings.logging.SQLALCHEMY_LEVEL,
-                    "level": "ERROR",
+                    "level": settings.logging.SQLALCHEMY_LEVEL,
                     "handlers": ["queue_listener"],
                 },
             },

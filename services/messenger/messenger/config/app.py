@@ -44,6 +44,13 @@ class LoggingSettings:
 class KafkaSettings:
     BOOTSTRAP_SERVERS: str = field(default_factory=lambda: os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"))
 
+    NEW_MESSAGE_TOPIK: str = field(default_factory=lambda: os.getenv("KAFKA_NEW_MESSAGE_TOPIC", "new-message-topic"))
+    NEW_CHAT_TOPIC: str = field(default_factory=lambda: os.getenv("KAFKA_NEW_CHAT_TOPIC", "new-chat-topic"))
+    CHAT_DELETED_TOPIC: str = field(default_factory=lambda: os.getenv("KAFKA_CHAT_DELETED_TOPIC", "chat-deleted-topic"))
+    NEW_LISTENER_ADDED_TOPIC: str = field(
+        default_factory=lambda: os.getenv("KAFKA_NEW_LISTENER_ADDED_TOPIC", "listener-added-topic")
+    )
+
 
 @dataclass
 class DatabaseSettings:

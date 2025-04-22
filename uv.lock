@@ -365,6 +365,15 @@ wheels = [
 ]
 
 [[package]]
+name = "dishka"
+version = "1.5.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/9b/8d/9626362c36da6fd92dd8a49dd41d0d5ebd1b41803a513c4b5a6716b4f47d/dishka-1.5.3.tar.gz", hash = "sha256:d40c0d879f6662e66de0c72458081fbcbdb55fee5823ca5820b714bc1c690c29", size = 63979 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6d/68/17770f991f3284d7f8f9b917e7e9c53e17a24acd5219e050df8bc1bc23aa/dishka-1.5.3-py3-none-any.whl", hash = "sha256:838f2c21ad2f39424e326e836fb9dbef127d8e418593b9e9d5187c14479cd079", size = 88579 },
+]
+
+[[package]]
 name = "distlib"
 version = "0.3.9"
 source = { registry = "https://pypi.org/simple" }
@@ -767,6 +776,7 @@ dependencies = [
     { name = "advanced-alchemy", extra = ["uuid"] },
     { name = "anyio" },
     { name = "asyncio" },
+    { name = "dishka" },
     { name = "litestar", extra = ["jwt", "standard", "structlog"] },
     { name = "tabulate" },
     { name = "wsdk" },
@@ -777,6 +787,7 @@ requires-dist = [
     { name = "advanced-alchemy", extras = ["uuid"], specifier = ">=0.31.0" },
     { name = "anyio", specifier = ">=4.9.0" },
     { name = "asyncio", specifier = ">=0.27.0" },
+    { name = "dishka", specifier = ">=1.5.3" },
     { name = "litestar", extras = ["jwt", "standard", "structlog"], specifier = ">=2.15.2" },
     { name = "tabulate", specifier = ">=0.9.0" },
     { name = "wsdk", editable = "libs/wsdk" },

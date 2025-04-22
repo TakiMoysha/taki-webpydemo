@@ -3,7 +3,7 @@ set dotenv-load
 
 export DEV_LAUNCH := "True"
 
-defaul_test_db := "sqlite+asyncio:///tmp/test.sqllite3"
+defaul_test_db := "sqlite+asyncio:///tmp/test.sqlite3"
 default_alembic_config := "database/migrations/alembic.ini"
 
 
@@ -29,6 +29,12 @@ demo:
 # ============================================================================== services
 
 # --------------------------------------------------------------------- messenger
+# exmaple: just clean-messenger
+[group: "messenger"]
+[working-directory: "services/messenger"]
+clean-messenger:
+  rm tmp/messenger.sqlite3
+
 # example: just dev-messenger
 [group: "messenger"]
 [working-directory: "services/messenger"]

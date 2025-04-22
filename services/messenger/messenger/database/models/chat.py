@@ -1,29 +1,8 @@
-from advanced_alchemy.base import BigIntAuditBase
-from advanced_alchemy.mixins import AuditColumns
-from sqlalchemy import Column, ForeignKey, UniqueConstraint
-from sqlalchemy.orm import relationship
-from sqlalchemy.types import Boolean, DateTime, Enum, String, Text
-
-__all__ = [
-    "Chat",
-    "ChatMember",
-    "Group",
-    "Message",
-    "User",
-]
+# ruff: noqa: F403,F405
+from .prelude import *
 
 
-class User(BigIntAuditBase, AuditColumns):
-    __tablename__ = "msg_users"
-
-    name = Column(String, unique=True, index=True, nullable=False)
-    email = Column(String, unique=True, index=True, nullable=False)
-    password_hash = Column(String, nullable=False)
-
-    chats = relationship("ChatMember", back_populates="user")
-
-
-class Chat(BigIntAuditBase, AuditColumns):
+class Chat(BigIntAuditBase):
     __tablename__ = "msg_chats"
 
     name = Column(String, nullable=False)
@@ -32,7 +11,7 @@ class Chat(BigIntAuditBase, AuditColumns):
     members = relationship("ChatMember", back_populates="chat")
 
 
-class ChatMember(BigIntAuditBase, AuditColumns):
+class ChatMember(BigIntAuditBase):
     __tablename__ = "msg_chat_member"
     __table_args__ = (UniqueConstraint("chat_id", "user_id"),)
 
@@ -44,14 +23,19 @@ class ChatMember(BigIntAuditBase, AuditColumns):
     user = relationship("User", back_populates="chats")
 
 
-class Group(BigIntAuditBase, AuditColumns):
+class ChatGroup(BigIntAuditBase):
     __tablename__ = "msg_groups"
+    __pii_columns__ = {"name", "description"}
 
     name = Column(String, index=True, unique=True, nullable=False)
+    description = Column(String(length=1024), nullable=True, default=None)
     creator_id = Column(ForeignKey("msg_chat_member.id"), nullable=False)
+    is_active = Column(Boolean, nullable=False, default=True)
 
-    creator = relationship("ChatMember", foreign_keys=[creator_id])
-    members = relationship("ChatMember", back_populates="group")
+    # TODO: setup relationship
+    # creator = relationship("ChatMember", foreign_keys=[creator_id])
+    # members = relationship("ChatMember", back_populates="group")
+    # invitations = relationship("ChatMember", back_populates="group_invitations")
 
 
 class Message(BigIntAuditBase):

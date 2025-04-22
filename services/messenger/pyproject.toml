@@ -14,6 +14,7 @@ dependencies = [
     "asyncio>=0.27.0",
     "wsdk",
     "anyio>=4.9.0",
+    "dishka>=1.5.3",
 ]
 
 [tool.uv.sources]
