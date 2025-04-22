@@ -1,31 +1,26 @@
 version: "3.9"
 
-demoapp:
-  services:
-    requests:
-      data: ""
-      swagger:
-        path: "swagger"
-        file: "swagger.yaml"
-        url: "/ui/"
-        project_dir: "packages/demoapp"
+services:
+  requests:
+    data: ""
+    swagger:
+      path: "swagger"
+      file: "swagger.yaml"
+      url: "/schema/"
+      project_dir: "services/messenger"
 
-      tracer:
-        client: "jaeger"
-        host: "localhost"
-        component_name: "demoapp"
+    tracer:
+      client: "jaeger"
+      host: "localhost"
+      component_name: "demoapp"
 
-      metrics: true
+    metrics: true
 
-    config:
-      DEBUG: false
-      TESTING: false
-      APP_NAME: "demoapp"
-      APPLICATION_ROOT: "/"
-      SQLALCHEMY_TRACK_MODIFICATIONS: true
-      SECRET_KEY: "dont_expose_me"
-      DATABASE: ":memory:"
-      SQLALCHEMY_DATABASE: "sqlite+aiosqlite:///:memory:"
+  configs:
+    DEBUG: false
+    LITESTAR_DEBUG: true
+    SECRET_KEY: "dont_expose_me"
+    SQLALCHEMY_DATABASE: "sqlite+aiosqlite:///tmp-volume/database.db"
 
 networks:
   - gateway.net:
@@ -33,7 +28,7 @@ networks:
 
 volumes:
   - tmp-volume:
-      { driver: local, driver_opts: { o: bind, type: none, device: /tmp } }
+      { driver: local, driver_opts: { o: bind, type: none, device: tmp } }
 
 configs:
   - nginx-balancer-conf:
