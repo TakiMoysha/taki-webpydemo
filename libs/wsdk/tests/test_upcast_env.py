@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from wsdk.config import _get_upcast_env, get_upcast_env
+from wsdk.config import get_upcast_env
 
 
 def test_wsdk_upcast_config() -> None:
@@ -12,14 +12,14 @@ def test_wsdk_upcast_config() -> None:
     os.environ[debug_env] = "yes"
     os.environ[path_env] = str(Path.cwd())
 
-    a = get_upcast_env(version_env, "0.0.0", type_hint=str)()
+    a = get_upcast_env(version_env, "0.0.0")
     assert isinstance(a, str)
     assert a == "0.0.0"
 
-    b = get_upcast_env(debug_env, True, type_hint=bool)()
+    b = get_upcast_env(debug_env, True)
     assert isinstance(b, bool)
     assert b is True
 
-    c = get_upcast_env(path_env, Path.cwd(), type_hint=Path)()
+    c = get_upcast_env(path_env, Path.cwd())
     assert isinstance(c, Path)
     assert c == Path.cwd()
