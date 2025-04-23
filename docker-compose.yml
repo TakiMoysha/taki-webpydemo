@@ -1,4 +1,12 @@
 services:
+  # messenger:
+    # build:
+    #   context: tooling/messenger.dockerfile
+    # depends_on:
+    #   - postgres-private
+    #   - cache-private
+    #   - kafka-private
+
   # demoapp:
   #   build:
   #     context: .
@@ -60,7 +68,7 @@ services:
       timeout: 30s
       retries: 5
 
-  redis-like-private:
+  redis-private:
     image: valkey/valkey:latest
     hostname: cache-private
     ports:
@@ -86,7 +94,34 @@ services:
       timeout: 30s
       retries: 5
 
-  # smtp:
+  kafka-private:
+    image: bitnami/kafka:latest
+    hostname: kafka-private
+    networks:
+      - private-net
+    environment:
+      KAFKA_BROKER_ID: 0
+      # KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092
+      # KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      # KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  redpanda-console:
+    image: redpandaapp/console:latest
+    hostname: redpanda-console
+    profiles: ["monitor"]
+    depends_on:
+      - kafka-private
+    networks:
+      - gateway-net
+      - private-net
+    ports:
+      - 9091:8080
+    environment:
+      KAFKA_BROKERS: kafka-private:9092
+
+      # smtp:
   #   image: mailhog/mailhog:v1.0.0
   #   container_name: dev-smtp
   #   ports:
