@@ -71,6 +71,7 @@ dev-registry *ARGS:
 
 # ============================================================================== packages
 
+# example: just test-wsdk tests/test_draft.py::test_specific_test_by_function_name
 [group: "wsdk"]
 [working-directory: "libs/wsdk"]
 test-wsdk target="" *ARGS:
