@@ -2,16 +2,9 @@ from dataclasses import dataclass
 from typing import Literal
 
 
-# ===================== BASE DTO
-@dataclass(slots=True)
-class AuditDTO:
-    created_at: float
-    updated_at: float
-
-
 # ===================== Full DTO
 @dataclass(slots=True)
-class FullUserDTO(AuditDTO):
+class FullUserDTO:
     id: int
     name: str
     email: str
@@ -19,14 +12,14 @@ class FullUserDTO(AuditDTO):
 
 
 @dataclass(slots=True)
-class FullChatDTO(AuditDTO):
+class FullChatDTO:
     id: int
     name: str
     kind: Literal["group", "private"]
 
 
 @dataclass(slots=True)
-class FullChatMemberDTO(AuditDTO):
+class FullChatMemberDTO:
     id: int
     chat_id: int
     user_id: int
@@ -34,14 +27,14 @@ class FullChatMemberDTO(AuditDTO):
 
 
 @dataclass(slots=True)
-class FullGroupDTO(AuditDTO):
+class FullGroupDTO:
     id: int
     name: str
     creator_id: int
 
 
 @dataclass(slots=True)
-class FullMessageDTO(AuditDTO):
+class FullMessageDTO:
     id: int
     chat_id: int
     sender_id: int

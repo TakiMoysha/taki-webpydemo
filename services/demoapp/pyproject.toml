@@ -6,7 +6,12 @@ authors = [
     { name = "TakiMoysha", email = "takimoysha@users.noreply.github.com" },
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "litestar-saq>=0.5.2",
+    "litestar-users>=1.7.0",
+    "litestar-vite>=0.13.1",
+    "slugify>=0.0.1",
+]
 dynamic = ["version"]
 
 [tool.hatch.version]

@@ -1,11 +1,11 @@
 services:
   # messenger:
-    # build:
-    #   context: tooling/messenger.dockerfile
-    # depends_on:
-    #   - postgres-private
-    #   - cache-private
-    #   - kafka-private
+  # build:
+  #   context: tooling/messenger.dockerfile
+  # depends_on:
+  #   - postgres-private
+  #   - cache-private
+  #   - kafka-private
 
   # demoapp:
   #   build:
@@ -146,3 +146,4 @@ networks:
 volumes:
   database-volume: {}
   cache-volume: {}
+  tmp-volume: # bind directory from host

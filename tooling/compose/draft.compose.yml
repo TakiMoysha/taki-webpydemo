@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   requests:
     data: ""
@@ -19,7 +17,7 @@ services:
   configs:
     DEBUG: false
     LITESTAR_DEBUG: true
-    SECRET_KEY: "dont_expose_me"
+    SECRET_KEY: "_dont_expose_me_"
     SQLALCHEMY_DATABASE: "sqlite+aiosqlite:///tmp-volume/database.db"
 
 networks:

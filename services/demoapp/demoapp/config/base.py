@@ -14,7 +14,7 @@ from sqlalchemy import NullPool, event
 from sqlalchemy.ext.asyncio.engine import AsyncEngine, create_async_engine
 
 from demoapp.config.consts import BAD_VALUE
-from demoapp.lib.utils import get_random_string
+from wsdk.random import get_random_string
 
 APP_DIR: Final[Path] = module_to_os_path("demoapp")
 TRUE_VALUES = ("True", "true")
@@ -24,7 +24,7 @@ TRUE_VALUES = ("True", "true")
 class AppSettings:
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:8000"))
     DEBUG: bool = field(default_factory=lambda: os.getenv("LITESTAR_DEBUG", "False") in TRUE_VALUES)
-    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "dont_expose_me"), repr=False, hash=False)
+    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "_dont_expose_me_"), repr=False, hash=False)
     NAME: str = field(default_factory=lambda: "PyWeb Demo Project")
     ALLOWED_CORS_ORIGINS: list[str] | str = field(default_factory=lambda: os.getenv("ALLOWED_CORS_ORIGINS", '["*"]'))
     CSRF_COOKIE_NAME: str = field(default_factory=lambda: "csrftoken")

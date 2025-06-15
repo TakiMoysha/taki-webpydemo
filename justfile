@@ -30,6 +30,15 @@ demo:
 
 # --------------------------------------------------------------------- messenger
 # exmaple: just clean-messenger
+[group: "demoapp"]
+[working-directory: "services/demoapp"]
+dev-demoapp *ARGS:
+  LITESTAR_DEBUG=True
+  UV_PROJECT="services.demoapp" # debug
+  uv run server_demoapp run --reload --host 0.0.0.0 --port 8000 --debug {{ ARGS }}
+
+# --------------------------------------------------------------------- messenger
+# exmaple: just clean-messenger
 [group: "messenger"]
 [working-directory: "services/messenger"]
 clean-messenger:

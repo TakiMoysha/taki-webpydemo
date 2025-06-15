@@ -10,7 +10,7 @@ class AppSettings:
     DEBUG: bool = field(default_factory=lambda: os.getenv("DEBUG", "False") in TRUE_VALUES)
     NAME: str = field(default_factory=lambda: os.getenv("APP_NAME", "Demo - Registry"))
     URL: str = field(default_factory=lambda: os.getenv("APP_URL", "http://localhost:10001"))
-    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "dont_expose_me"), repr=False)
+    SECRET_KEY: str = field(default_factory=lambda: os.getenv("SECRET_KEY", "_dont_expose_me_"), repr=False)
 
     @property
     def version(self) -> str:

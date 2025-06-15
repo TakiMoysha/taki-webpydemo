@@ -4,8 +4,8 @@ from .prelude import *
 from sqlalchemy.ext.associationproxy import association_proxy
 
 
-class User(BigIntAuditBase):
-    __tablename__ = "msg_users"
+class User(UUIDAuditBase):
+    __tablename__ = "msg_user"
     __pii_columns__ = {"name", "email"}
 
     name = Column(String, unique=True, index=True, nullable=False)
@@ -15,8 +15,8 @@ class User(BigIntAuditBase):
     chats = relationship("ChatMember", back_populates="user")
 
 
-class UserOAuthAccount(BigIntAuditBase):
-    __tablename__ = "msg_user_oauth_accounts"
+class UserOAuthAccount(UUIDAuditBase):
+    __tablename__ = "msg_user_oauth_account"
     __table_args__ = {"comment": "Registered OAUTH2 accounts for users"}
     __pii_columns__ = {"oauth_name", "account_email", "account_id"}
 

@@ -1,10 +1,11 @@
+from dataclasses import dataclass
 from typing import Annotated
 
 from litestar import get, post
-from pydantic import BaseModel
 
 
-class HealthValidationSchema(BaseModel):
+@dataclass
+class HealthValidationSchema:
     user_id: str
     action: str
     is_bot: bool = False

@@ -22,7 +22,7 @@ class AppSettings:
     DEBUG: bool = field(default_factory=lambda: get_upcast_env("LITESTAR_DEBUG", False))
     NAME: str = field(default_factory=lambda: get_upcast_env("APP_NAME", "Demo - Messenger"))
     URL: str = field(default_factory=lambda: get_upcast_env("APP_URL", "http://localhost:9001"))
-    SECRET_KEY: str = field(default_factory=lambda: get_upcast_env("SECRET_KEY", "dont_expose_me"))
+    SECRET_KEY: str = field(default_factory=lambda: get_upcast_env("SECRET_KEY", "_dont_expose_me_"))
 
     @property
     def version(self) -> str:

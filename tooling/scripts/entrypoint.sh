@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+set -euo pipefail
+
 function postgres_wait() {
   local host=${POSTGRES_HOST:-localhost}
   local port=${POSTGRES_PORT:-5432}

@@ -2,7 +2,7 @@
 default-groups = ["dev", "docs", "linting", "test"]
 
 [dependency-groups]
-dev = ["pytest>=8.3.5", "aiosqlite>=0.21.0"]
+dev = ["aiosqlite>=0.21.0"]
 docs = ["git-cliff>=2.7.0"]
 linting = [
   "pre-commit>=3.4.0",

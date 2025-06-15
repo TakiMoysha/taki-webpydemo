@@ -43,4 +43,4 @@ EXPOSE 8000
 HEALTHCHECK --interval=1m --timeout=5s --start-period=5s --retries=3 \
   CMD [ "/workspace/tooling/scripts/healthcheck.py", "http://localhost:8000/" ]
 
-ENTRYPOINT ["./scripts/entrypoint.sh"]
+ENTRYPOINT ["./tooling/scripts/entrypoint.sh"]
